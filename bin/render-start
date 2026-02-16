@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ -z "${DATABASE_URL:-}" ]; then
+  echo "DATABASE_URL is missing"
+  exit 1
+fi
+
+echo "Waiting for database..."
+for i in $(seq 1 30); do
+  bundle exec ruby -e "require 'pg'; c=PG.connect(ENV['DATABASE_URL']); c.exec('SELECT 1'); c.close" \
+    && break || true
+  echo "DB not ready yet ($i/30), retrying..."
+  sleep 2
+done
+
+echo "Running migrations..."
+bundle exec rails db:migrate
+
+echo "Starting server..."
+exec bundle exec rails server -b 0.0.0.0 -p "${PORT}"
