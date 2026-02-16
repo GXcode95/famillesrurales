@@ -1,0 +1,32 @@
+%div.w-full.max-w-md.mx-auto.bg-white.shadow-lg.rounded-lg.p-8
+  %h2.text-2xl.font-bold.text-gray-900.mb-4.text-center
+    Changer ton mot de passe
+
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+    = f.error_notification
+
+    = f.input :reset_password_token, as: :hidden
+    = f.full_error :reset_password_token
+
+    .space-y-4
+      = f.input :password,
+        label: "Nouveau mot de passe",
+        required: true,
+        autofocus: true,
+        hint: ("#{@minimum_password_length} caractères minimum" if @minimum_password_length),
+        input_html: { autocomplete: "new-password", class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" },
+        label_html: { class: "block text-sm font-medium text-gray-700" }
+
+      = f.input :password_confirmation,
+        label: "Confirmation du nouveau mot de passe",
+        required: true,
+        input_html: { autocomplete: "new-password", class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" },
+        label_html: { class: "block text-sm font-medium text-gray-700" }
+
+    .mt-6
+      = f.button :submit, "Mettre à jour le mot de passe",
+        class: "w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+
+  .mt-6
+    = render "devise/shared/links"
+

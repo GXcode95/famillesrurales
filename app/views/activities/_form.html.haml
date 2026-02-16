@@ -1,0 +1,31 @@
+%div.bg-white.shadow-lg.rounded-lg.p-6
+  = simple_form_for(@activity) do |f|
+    = f.error_notification
+
+    .grid.grid-cols-1.md:grid-cols-2.gap-4
+      = f.input :name, label: "Nom"
+      = f.input :categories_id,
+        as: :select,
+        collection: Category.order(:name),
+        label_method: :name,
+        value_method: :id,
+        label: "Catégorie",
+        include_blank: "Sélectionner une catégorie"
+
+      = f.input :manager_name, label: "Responsable"
+      = f.input :manager_email, label: "Email du responsable"
+      = f.input :manager_phone, label: "Téléphone du responsable"
+      = f.input :teacher_name, label: "Intervenant"
+
+      = f.input :pricing, label: "Tarif", as: :decimal
+      = f.input :start_date, label: "Date de début", as: :date
+      = f.input :start_time, label: "Heure de début", as: :time
+      = f.input :end_time, label: "Heure de fin", as: :time
+
+    = f.input :info, label: "Informations complémentaires"
+
+    .mt-6.flex.justify-end.gap-3
+      = link_to "Annuler", activities_path,
+        class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      = f.button :submit, class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+

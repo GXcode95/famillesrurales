@@ -1,0 +1,65 @@
+%div.w-full.max-w-3xl.mx-auto.space-y-6
+  .flex.items-center.justify-between
+    %h1.text-2xl.font-bold.text-gray-900
+      = @activity.name
+    .flex.gap-3
+      = link_to "Modifier", edit_activity_path(@activity),
+        class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+      = link_to "Retour à la liste", activities_path,
+        class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+
+  %div.bg-white.shadow-sm.rounded-lg.p-6.space-y-4
+    %dl.divide-y.divide-gray-200
+      %div.py-3.grid.grid-cols-3.gap-4.text-sm
+        %dt.font-medium.text-gray-500
+          Catégorie
+        %dd.col-span-2.text-gray-900
+          = @activity.category&.name
+
+      %div.py-3.grid.grid-cols-3.gap-4.text-sm
+        %dt.font-medium.text-gray-500
+          Responsable
+        %dd.col-span-2.text-gray-900
+          = @activity.manager_name
+          - if @activity.manager_email.present?
+            %div.text-gray-500
+              = @activity.manager_email
+          - if @activity.manager_phone.present?
+            %div.text-gray-500
+              = @activity.manager_phone
+
+      %div.py-3.grid.grid-cols-3.gap-4.text-sm
+        %dt.font-medium.text-gray-500
+          Intervenant
+        %dd.col-span-2.text-gray-900
+          = @activity.teacher_name
+
+      %div.py-3.grid.grid-cols-3.gap-4.text-sm
+        %dt.font-medium.text-gray-500
+          Tarif
+        %dd.col-span-2.text-gray-900
+          = @activity.pricing
+
+      %div.py-3.grid.grid-cols-3.gap-4.text-sm
+        %dt.font-medium.text-gray-500
+          Horaires
+        %dd.col-span-2.text-gray-900.space-y-1
+          - if @activity.start_date.present?
+            %div
+              Début :
+              = l(@activity.start_date)
+          - if @activity.start_time.present?
+            %div
+              Heure de début :
+              = @activity.start_time.strftime("%H:%M")
+          - if @activity.end_time.present?
+            %div
+              Heure de fin :
+              = @activity.end_time.strftime("%H:%M")
+
+      %div.py-3.grid.grid-cols-3.gap-4.text-sm
+        %dt.font-medium.text-gray-500
+          Informations
+        %dd.col-span-2.text-gray-900.whitespace-pre-line
+          = @activity.info
+

@@ -10,9 +10,65 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_02_16_080757) do
+ActiveRecord::Schema[8.2].define(version: 2026_02_16_111002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.bigint "categories_id", null: false
+    t.datetime "created_at", null: false
+    t.time "end_time"
+    t.text "info"
+    t.string "manager_email"
+    t.string "manager_name"
+    t.string "manager_phone"
+    t.string "name"
+    t.float "pricing"
+    t.date "start_date"
+    t.time "start_time"
+    t.string "teacher_name"
+    t.datetime "updated_at", null: false
+    t.index ["categories_id"], name: "index_activities_on_categories_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "author"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.bigint "post_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "date"
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "staffs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "job"
+    t.string "name"
+    t.string "phone"
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -25,4 +81,7 @@ ActiveRecord::Schema[8.2].define(version: 2026_02_16_080757) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "activities", "categories", column: "categories_id"
+  add_foreign_key "comments", "posts"
 end
