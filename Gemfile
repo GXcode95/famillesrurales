@@ -43,22 +43,27 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
-  # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
-  gem "bundler-audit", require: false
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
+  gem "byebug"
+  gem "rubocop"
+  # Disabled atm cuz not supported yet in the lastest raisl version
+  # gem "bullet"
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "dotenv-rails"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "annotate"
+  # gem 'hotwire-spark' # Hot reload on code change
+  gem 'letter_opener'
+  gem 'better_errors', '2.10.1'
 end
 
 gem "haml-rails", "~> 3.0"
+gem "devise"
+gem "view_component"
+gem "simple_form"
+gem "cancancan"
+
