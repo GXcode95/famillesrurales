@@ -10,7 +10,7 @@ module IconsHelper
     # Extraire les classes
     classes = options.delete(:class)
     class_attr = classes.present? ? "class=\"#{classes}\" " : ""
-    
+
     # Gérer les attributs data
     data_attrs = options.delete(:data) || {}
     data_attr_string = data_attrs.map { |k, v| "data-#{k.to_s.gsub('_', '-')}=\"#{v}\"" }.join(" ")

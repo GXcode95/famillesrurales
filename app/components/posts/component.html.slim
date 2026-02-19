@@ -1,0 +1,23 @@
+article.px-4.py-2.border.border-gray-200.shadow-lg.relative
+  .text-xs.text-gray-500.absolute
+    = l(@post.updated_at, format: :short)
+
+  - if @editable
+    .absolute.top-2.right-2.flex.flex-row.gap-2
+        = link_to "Modifier", edit_post_path(@post), class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+        = link_to "Supprimer", @post, method: :delete, data: { confirm: "Supprimer cet article ?" }, class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700"
+
+  header.pt-2.sm:pt-4
+    h1.text-3xl.sm:text-4xl.lg:text-5xl.font-bold.text-black.mb-4.leading-tight.uppercase.tracking-wide
+      = @post.title
+
+  .px-6
+    .text-gray-800.leading-relaxed.text-base.sm:text-lg.whitespace-pre-line
+      = @post.body
+
+    - if @post.photos.attached?
+      .mt-4.flex.flex-wrap.gap-3
+        - @post.photos.each do |photo|
+          = link_to photo, target: "_blank", rel: "noopener" do
+            = image_tag photo.variant(resize_to_limit: [400, 400]),
+              class: "rounded-lg shadow-md hover:shadow-lg transition-shadow object-cover max-h-48"

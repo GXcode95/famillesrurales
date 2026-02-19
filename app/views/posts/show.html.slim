@@ -16,6 +16,13 @@
       p.whitespace-pre-line
         = @post.body
 
+    - if @post.photos.attached?
+      .mt-4.flex.flex-wrap.gap-3
+        - @post.photos.each do |photo|
+          = link_to photo, target: "_blank", rel: "noopener" do
+            = image_tag photo.variant(resize_to_limit: [400, 400]),
+              class: "rounded-lg shadow-md hover:shadow-lg transition-shadow object-cover max-h-48"
+
   / Commentaires liés à cet article
   .bg-white.shadow-sm.rounded-lg.p-6.space-y-4
     h2.text-lg.font-semibold.text-gray-900
