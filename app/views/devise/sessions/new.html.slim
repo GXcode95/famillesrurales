@@ -1,0 +1,19 @@
+.w-full.max-w-md.mx-auto.bg-white.shadow-lg.rounded-lg.p-8
+  h2.text-2xl.font-bold.text-gray-900.mb-6.text-center
+    | Connexion
+
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .space-y-4
+      = f.input :email, required: false, autofocus: true, input_html: { autocomplete: "email", class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" }, label_html: { class: "block text-sm font-medium text-gray-700" }
+
+      = f.input :password, required: false, input_html: { autocomplete: "current-password", class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" }, label_html: { class: "block text-sm font-medium text-gray-700" }
+
+      - if devise_mapping.rememberable?
+        .flex.items-center.justify-between
+          = f.input :remember_me, as: :boolean, inline_label: "Se souvenir de moi", label: false, input_html: { class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" }
+
+    .mt-6
+      = f.button :submit, "Se connecter", class: "w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+
+  .mt-6
+    = render "devise/shared/links"

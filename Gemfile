@@ -61,7 +61,9 @@ group :development do
   gem 'better_errors', '2.10.1'
 end
 
-gem "haml-rails", "~> 3.0"
+
+gem 'slim_lint'
+gem 'slim-rails'
 gem "devise"
 gem "view_component"
 gem "simple_form"

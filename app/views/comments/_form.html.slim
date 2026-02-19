@@ -1,0 +1,14 @@
+.bg-white.shadow-lg.rounded-lg.p-6
+  = simple_form_for([@post, @comment]) do |f|
+    = f.error_notification
+
+    .space-y-4
+      = f.input :author, label: "Auteur"
+      = f.input :content, label: "Commentaire", as: :text
+
+    .mt-6.flex.justify-end.gap-3
+      = link_to "Annuler", @post,
+        class: "inline-flex.items-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-sm.font-medium.text-gray-700.hover:bg-gray-50"
+      = f.button :submit,
+        class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+

@@ -1,0 +1,29 @@
+.w-full
+  .flex.items-center.justify-between.mb-6
+    h1.text-2xl.font-bold.text-gray-900
+      | Catégories
+    - if user_signed_in?
+      = link_to "Nouvelle catégorie", new_category_path, class: "inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+
+  - if @categories.any?
+    .overflow-x-auto.bg-white.shadow.rounded-lg
+      table.min-w-full.divide-y.divide-gray-200
+        thead.bg-gray-50
+          tr
+            th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase
+              | Nom
+            th.px-4.py-3.text-right.text-xs.font-medium.text-gray-500.uppercase
+              | Actions
+        tbody.bg-white.divide-y.divide-gray-200
+          - @categories.each do |category|
+            tr
+              td.px-4.py-3.text-sm.text-gray-900
+                = category.name
+              td.px-4.py-3.text-sm.text-right.space-x-2
+                = link_to "Voir", category, class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                - if user_signed_in?
+                  = link_to "Modifier", edit_category_path(category), class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-1 text-xs font-medium text-white hover:bg-indigo-700"
+                  = button_to "Supprimer", category, method: :delete, data: { confirm: "Supprimer cette catégorie ?" }, class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700"
+  - else
+    p.text-gray-600
+      | Aucune catégorie pour le moment.

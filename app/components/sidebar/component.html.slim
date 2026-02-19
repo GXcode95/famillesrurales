@@ -1,0 +1,84 @@
+/ mobile overlay
+#sidebar-overlay.fixed.inset-0.bg-black.bg-opacity-50.z-40.hidden data-sidebar-target="overlay" data-action="click->sidebar#toggle"
+
+/ hidden sidebar ( toggleable on all devices)
+#sidebar.fixed.left-0.top-0.h-full.bg-white.shadow-lg.z-50.w-64.transition-transform.duration-300.ease-in-out.flex.flex-col.-translate-x-full data-sidebar-target="sidebar"
+  
+  / sidebar header
+  .p-4.border-b.border-gray-200.flex.items-center.justify-between
+    = link_to root_path, class: "text-lg font-bold text-indigo-700 hover:text-indigo-900"
+      | Familles Rurales
+    / chevron button to close sidebar
+    button.text-gray-500.hover:text-gray-700 data-action="click->sidebar#toggle"
+      = svg_tag("chevron-left", class: "w-6 h-6")
+
+  / main navigation
+  .flex-1.overflow-y-auto.py-4
+    nav.space-y-1.px-2
+      = link_to root_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = svg_tag("home", class: "w-5 h-5 mr-3")
+        | Accueil
+
+      = link_to posts_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = svg_tag("document", class: "w-5 h-5 mr-3")
+        | Articles
+
+      - @events.each do |event|
+        = link_to event_path(event), class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+          = svg_tag("calendar", class: "w-5 h-5 mr-3")
+          = event.name
+
+      - @categories.each do |category|
+        .mt-1 data-controller="category-menu"
+          button.w-full.flex.items-center.justify-between.px-4.py-2.text-sm.font-medium.text-gray-700.rounded-md.hover:bg-indigo-50.hover:text-indigo-700 data-action="click->category-menu#toggle"
+            .flex.items-center
+              = svg_tag("tag", class: "w-4 h-4 mr-2")
+              = category.name
+            span data-category-menu-target="icon"
+              = svg_tag("chevron-right", class: "w-4 h-4 transition-transform duration-200")
+          .hidden.ml-4.mt-1.space-y-1 data-category-menu-target="menu"
+            - if category.activities.any?
+              - category.activities.each do |activity|
+                = link_to activity_path(activity), class: "flex items-center px-4 py-2 text-sm text-gray-600 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+                  = svg_tag("clipboard", class: "w-4 h-4 mr-2")
+                  = activity.name
+            - else
+              p.px-4.py-2.text-xs.text-gray-500
+                | Aucune activité
+
+  / user section at the bottom of the sidebar
+  / TODO; Remove later
+  .p-4.border-t.border-gray-200
+    - if user_signed_in?
+      span.text-xs.text-gray-500.mb-1
+        | Admin :
+      .space-y-1
+        = link_to events_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+          = svg_tag("calendar", class: "w-5 h-5 mr-3")
+          | Événements
+        = link_to posts_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+          = svg_tag("document", class: "w-5 h-5 mr-3")
+          | Articles
+        = link_to staffs_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+          = svg_tag("users", class: "w-5 h-5 mr-3")
+          | Staff
+        = link_to activities_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+          = svg_tag("clipboard", class: "w-5 h-5 mr-3")
+          | Activités
+        = link_to categories_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+          = svg_tag("tag", class: "w-5 h-5 mr-3")
+          | Catégories
+
+    - if user_signed_in?
+      .mb-3
+        p.text-xs.text-gray-500.mb-1
+          | Connecté en tant que
+        p.text-sm.font-semibold.text-gray-900
+          = current_user&.email
+      .space-y-2
+        = link_to "Mon compte", edit_user_registration_path, class: "block w-full text-center px-4 py-2 text-sm font-medium text-indigo-700 bg-indigo-50 rounded-md hover:bg-indigo-100"
+        = button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "block w-full px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+    - else
+      .space-y-2
+        = link_to "Connexion", new_user_session_path, class: "block w-full text-center px-4 py-2 text-sm font-medium text-indigo-700 bg-white border border-indigo-300 rounded-md hover:bg-gray-50"
+        = link_to "Inscription", new_user_registration_path, class: "block w-full text-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"

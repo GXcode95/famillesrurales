@@ -54,7 +54,7 @@ class ActivitiesController < ApplicationController
       :start_date,
       :start_time,
       :end_time,
-      :categories_id
+      :category_id
     )
   end
 end

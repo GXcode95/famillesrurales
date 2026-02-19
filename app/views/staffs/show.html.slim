@@ -1,0 +1,27 @@
+.w-full.max-w-3xl.mx-auto.space-y-6
+  .flex.items-center.justify-between
+    h1.text-2xl.font-bold.text-gray-900
+      = @staff.name
+    .flex.gap-3
+      - if user_signed_in?
+        = link_to "Modifier", edit_staff_path(@staff),
+          class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+      = link_to "Retour à la liste", staffs_path,
+        class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+
+  div.bg-white.shadow-sm.rounded-lg.p-6.space-y-3
+    p.text-sm.text-gray-600
+      Fonction :
+      span.font-medium
+        = @staff.job
+
+    p.text-sm.text-gray-600
+      Email :
+      span.font-medium
+        = @staff.email
+
+    p.text-sm.text-gray-600
+      Téléphone :
+      span.font-medium
+        = @staff.phone
+
