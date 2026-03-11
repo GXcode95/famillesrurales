@@ -15,20 +15,20 @@
   / main navigation
   .flex-1.overflow-y-auto.py-4
     nav.space-y-1.px-2
-      = link_to root_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+      = link_to root_path, class: nav_link_classes(root_path, exact: true)
         = svg_tag("home", class: "w-5 h-5 mr-3")
         | Accueil
 
-      = link_to posts_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+      = link_to posts_path, class: nav_link_classes(posts_path)
         = svg_tag("document", class: "w-5 h-5 mr-3")
         | Nouvelles
 
-      = link_to staffs_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+      = link_to staffs_path, class: nav_link_classes(staffs_path)
           = svg_tag("users", class: "w-5 h-5 mr-3")
           | Administration
 
       - @events.each do |event|
-        = link_to event_path(event), class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = link_to event_path(event), class: nav_link_classes(event_path(event), exact: true)
           = svg_tag("calendar", class: "w-5 h-5 mr-3")
           = event.name
 
@@ -43,7 +43,7 @@
           .hidden.ml-4.mt-1.space-y-1 data-category-menu-target="menu"
             - if category.activities.any?
               - category.activities.each do |activity|
-                = link_to activity_path(activity), class: "flex items-center px-4 py-2 text-sm text-gray-600 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+                = link_to activity_path(activity), class: nav_link_classes(activity_path(activity), exact: true, sub_item: true)
                   = svg_tag("clipboard", class: "w-4 h-4 mr-2")
                   = activity.name
             - else
@@ -57,19 +57,19 @@
       span.text-xs.text-gray-500.mb-1
         | Admin :
       .space-y-1
-        = link_to events_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = link_to events_path, class: nav_link_classes(events_path)
           = svg_tag("calendar", class: "w-5 h-5 mr-3")
           | Événements
-        = link_to posts_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = link_to posts_path, class: nav_link_classes(posts_path)
           = svg_tag("document", class: "w-5 h-5 mr-3")
           | Articles
-        = link_to staffs_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = link_to staffs_path, class: nav_link_classes(staffs_path)
           = svg_tag("users", class: "w-5 h-5 mr-3")
           | Staff
-        = link_to activities_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = link_to activities_path, class: nav_link_classes(activities_path)
           = svg_tag("clipboard", class: "w-5 h-5 mr-3")
           | Activités
-        = link_to categories_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
+        = link_to categories_path, class: nav_link_classes(categories_path)
           = svg_tag("tag", class: "w-5 h-5 mr-3")
           | Catégories
 

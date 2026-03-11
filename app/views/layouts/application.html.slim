@@ -23,7 +23,7 @@ html
     = javascript_importmap_tags
 
   body.bg-gray-50.min-h-screen.flex data-controller="sidebar"
-    = render Sidebar::Component.new(current_user: current_user)
+    = render Sidebar::Component.new(current_user: current_user, current_path: request.path)
 
     / Contenu principal avec marge pour la sidebar
     .flex-1.flex.flex-col.md:ml-0.transition-all.duration-300 data-sidebar-target="content"
