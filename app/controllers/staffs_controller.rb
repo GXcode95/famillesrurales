@@ -1,11 +1,9 @@
 class StaffsController < ApplicationController
-  before_action :set_staff, only: %i[show edit update destroy]
+  before_action :set_staff, only: %i[edit update destroy]
 
   def index
     @staffs = Staff.order(:name)
   end
-
-  def show; end
 
   def new
     @staff = Staff.new
@@ -17,7 +15,7 @@ class StaffsController < ApplicationController
     @staff = Staff.new(staff_params)
 
     if @staff.save
-      redirect_to @staff, notice: "Membre du staff créé avec succès."
+      redirect_to staffs_path, notice: "Membre du staff créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +23,7 @@ class StaffsController < ApplicationController
 
   def update
     if @staff.update(staff_params)
-      redirect_to @staff, notice: "Membre du staff mis à jour avec succès."
+      redirect_to staffs_path, notice: "Membre du staff mis à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +41,7 @@ class StaffsController < ApplicationController
   end
 
   def staff_params
-    params.require(:staff).permit(:name, :email, :job, :phone)
+    params.require(:staff).permit(:name, :email, :job, :phone, :photo)
   end
 end
 
