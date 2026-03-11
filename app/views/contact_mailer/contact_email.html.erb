@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h2>Nouveau message depuis le formulaire de contact</h2>
+
+    <p><strong>De :</strong> <%= @params[:name] %> (<%= @params[:email] %>)</p>
+    <p><strong>Sujet :</strong> <%= @params[:subject] %></p>
+
+    <hr />
+
+    <p><%= simple_format(@params[:message]) %></p>
+  </body>
+</html>

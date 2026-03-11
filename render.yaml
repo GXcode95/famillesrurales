@@ -18,6 +18,10 @@ services:
         fromDatabase:
           name: familles-rurales-db
           property: connectionString
+      - key: CONTACT_EMAIL
+        value: xavier.grenouillet@gmail.com
+      - key: APP_HOST
+        value: famillesrurales.onrender.com
 
 databases:
   - name: familles-rurales-db
