@@ -1,2 +1,14 @@
-h1.text-3xl.font-bold
-  | Bienvenue 👋
+.w-full.max-w-3xl.mx-auto.space-y-6
+  - if @latest_posts.any?
+    section
+      h2.text-xl.font-semibold.text-gray-800.mb-4
+        | Dernières nouvelles
+      .flex.flex-col.gap-4
+        - @latest_posts.each do |post|
+          = render Posts::Component.new(post: post, editable: false)
+      .mt-4
+        = link_to "Toutes les actualités →", posts_path,
+          class: "text-indigo-600 hover:text-indigo-800 font-medium"
+  - else
+    p.text-gray-600
+      Aucune nouvelle pour le moment.
