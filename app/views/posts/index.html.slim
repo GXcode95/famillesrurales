@@ -9,7 +9,7 @@
   - if @posts.any?
     .flex.flex-col.gap-4
       - @posts.each do |post|
-        = render Posts::Component.new(post: post, editable: user_signed_in?)
+        = render Posts::Component.new(post: post, editable: user_signed_in?, signed_in: user_signed_in?)
     / .overflow-x-auto.bg-white.shadow.rounded-lg
     /   table.min-w-full.divide-y.divide-gray-200
     /     thead.bg-gray-50

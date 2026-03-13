@@ -1,7 +1,7 @@
-.w-full.mx-auto.space-y-6
+.w-full.max-w-3xl.mx-auto.space-y-6
   .flex.items-center.justify-end
     - if user_signed_in?
       = link_to "Nouvel événement", new_event_path,
         class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
 
-  = render Events::Component.new(event: @event, editable: user_signed_in?)
+  = render Events::Component.new(event: @event, editable: user_signed_in?, link_to_show: false, signed_in: user_signed_in?, comment: @comment)

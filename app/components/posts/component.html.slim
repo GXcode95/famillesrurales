@@ -21,3 +21,37 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
           = link_to photo, target: "_blank", rel: "noopener" do
             = image_tag photo.variant(resize_to_limit: [400, 400]),
               class: "rounded-lg shadow-md hover:shadow-lg transition-shadow object-cover max-h-48"
+
+    - if @show_comments
+      .mt-4.pt-4.border-t.border-gray-200
+        h3.text-sm.font-semibold.text-gray-900.mb-2
+          | Commentaires
+        - comments = @post.comments.order(created_at: :asc)
+        - if comments.any?
+          ul.space-y-2.mb-4
+            - comments.each do |c|
+              li.text-sm.text-gray-700.space-y-1
+                .flex.items-center.justify-between
+                  span.font-medium
+                    = c.author.presence || "Anonyme"
+                    - if @signed_in && c.email.present?
+                      span.text-gray-500.text-xs.ml-2
+                        | (
+                        = c.email
+                        | )
+                  - if @signed_in
+                    = button_to "Supprimer", post_comment_path(@post, c), method: :delete, data: { confirm: "Supprimer ce commentaire ?" }, class: "inline-flex rounded-md border border-transparent bg-red-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-red-700"
+                p.text-gray-700.whitespace-pre-line
+                  = c.content
+        - else
+          p.text-sm.text-gray-500.mb-4
+            | Aucun commentaire pour le moment.
+        .pt-2
+          = helpers.simple_form_for([@post, comment], url: post_comments_path(@post)) do |f|
+            = f.error_notification
+            .space-y-2
+              = f.input :author, label: "Pseudo", required: true
+              = f.input :email, label: "Email (optionnel)", required: false
+              = f.input :content, label: "Commentaire", as: :text
+            .mt-2
+              = f.button :submit, "Publier", class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"

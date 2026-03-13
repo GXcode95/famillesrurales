@@ -17,9 +17,11 @@ Rails.application.routes.draw do
 
   resources :activities
   resources :categories
-  resources :events
+  resources :events do
+    resources :comments, only: [:create, :destroy], controller: "comments"
+  end
   resources :posts do
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy], controller: "comments"
   end
   resources :staffs, except: [:show]
 end

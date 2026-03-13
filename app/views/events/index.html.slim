@@ -9,7 +9,7 @@
   - if @events.any?
     .flex.flex-col.gap-4
       - @events.each do |event|
-        = render Events::Component.new(event: event, editable: user_signed_in?, link_to_show: true)
+        = render Events::Component.new(event: event, editable: user_signed_in?, link_to_show: true, signed_in: user_signed_in?)
   - else
     p.text-gray-600
       Aucun événement pour le moment.
