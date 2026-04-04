@@ -9,16 +9,22 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.build(comment_params)
 
     if @comment.save
-      redirect_to @commentable, notice: "Commentaire ajouté avec succès."
+      redirect_to commentable_redirect_path, notice: "Commentaire ajouté avec succès."
     else
-      @commentable.is_a?(Post) ? @post = @commentable : @event = @commentable
-      render render_template, status: :unprocessable_entity
+      if @commentable.is_a?(Post)
+        @post = @commentable
+        @posts = Post.includes(gallery_photos: [:tags, { image_attachment: :blob }]).order(created_at: :desc)
+        render "posts/index", status: :unprocessable_entity
+      else
+        @event = @commentable
+        render "events/show", status: :unprocessable_entity
+      end
     end
   end
 
   def destroy
     @comment.destroy
-    redirect_to @commentable, notice: "Commentaire supprimé avec succès."
+    redirect_to commentable_redirect_path, notice: "Commentaire supprimé avec succès."
   end
 
   private
@@ -37,8 +43,12 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.find(params[:id])
   end
 
-  def render_template
-    @commentable.is_a?(Post) ? "posts/show" : "events/show"
+  def commentable_redirect_path
+    if @commentable.is_a?(Post)
+      posts_path(anchor: "post-#{@commentable.id}")
+    else
+      @commentable
+    end
   end
 
   def comment_params

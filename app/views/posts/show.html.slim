@@ -1,8 +1,0 @@
-.w-full.max-w-3xl.mx-auto.space-y-6
-  .flex.items-center.justify-end
-    .flex.gap-3
-      - if user_signed_in?
-        = link_to "Modifier", edit_post_path(@post), class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
-      = link_to "Retour à la liste", posts_path, class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-
-  = render Posts::Component.new(post: @post, editable: user_signed_in?, show_comments: true, signed_in: user_signed_in?, comment: @comment)

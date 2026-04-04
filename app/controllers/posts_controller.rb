@@ -3,14 +3,12 @@
 class PostsController < ApplicationController
   include ManageGalleryPhotos
 
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :authenticate_user!, except: %i[index]
+  before_action :set_post, only: %i[edit update destroy]
 
   def index
     @posts = Post.includes(gallery_photos: { image_attachment: :blob }).order(created_at: :desc)
   end
-
-  def show; end
 
   def new
     @post = Post.new
@@ -30,7 +28,7 @@ class PostsController < ApplicationController
         redirect_to edit_post_path(@post),
                     alert: "Article créé, mais l'ajout de photos a échoué : #{failed.errors.full_messages.to_sentence}"
       else
-        redirect_to @post, notice: "Article créé avec succès."
+        redirect_to posts_path(anchor: "post-#{@post.id}"), notice: "Article créé avec succès."
       end
     else
       render :new, status: :unprocessable_entity
@@ -49,7 +47,7 @@ class PostsController < ApplicationController
       if failed
         flash[:alert] = "Certaines photos n'ont pas été ajoutées : #{failed.errors.full_messages.to_sentence}"
       end
-      redirect_to @post, notice: notice
+      redirect_to posts_path(anchor: "post-#{@post.id}"), notice: notice
     else
       render :edit, status: :unprocessable_entity
     end

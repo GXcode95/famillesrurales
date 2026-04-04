@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+  get "calendrier", to: "calendar#index", as: :calendar
   get "contact", to: "contact#new", as: :contact
   post "contact", to: "contact#create"
 
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
   resources :events do
     resources :comments, only: [:create, :destroy], controller: "comments"
   end
-  resources :posts do
+  resources :posts, except: [:show] do
     resources :comments, only: [:create, :destroy], controller: "comments"
   end
   resources :staffs, except: [:show]

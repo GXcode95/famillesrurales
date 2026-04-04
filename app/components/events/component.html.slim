@@ -1,21 +1,36 @@
 article.px-4.py-2.border.border-gray-200.shadow-lg.relative
-  .text-xs.text-gray-500.absolute.top-2.left-4
-    - if @event.date.present?
-      = l(@event.date, format: :short)
-    - else
-      = l(@event.updated_at, format: :short)
-
   - if @editable
-    .absolute.top-2.right-2.flex.flex-row.gap-2
+    .absolute.top-2.right-2.z-10.flex.flex-row.gap-2
       = link_to "Modifier", edit_event_path(@event), class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
       = button_to "Supprimer", @event, method: :delete, data: { confirm: "Supprimer cet événement ?" }, class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700"
 
-  header.pt-2.sm:pt-4
-    h1.text-3xl.sm:text-4xl.lg:text-5xl.font-bold.text-black.mb-4.leading-tight.uppercase.tracking-wide
+  header.pt-2.sm:pt-4 class=(@editable ? "pr-2 sm:pr-44" : "")
+    h1.text-3xl.sm:text-4xl.lg:text-5xl.font-bold.text-black.mb-3.leading-tight.uppercase.tracking-wide
       - if @link_to_show
         = link_to @event.name, @event, class: "hover:underline"
       - else
         = @event.name
+
+    - if @event.date.present?
+      - d = @event.date.in_time_zone.to_date
+      - t = @event.date.in_time_zone
+      - wdays = %w[dimanche lundi mardi mercredi jeudi vendredi samedi]
+      - months_fr = CalendarHelper::MONTH_NAMES_FR
+      - date_phrase = "#{wdays[d.wday].capitalize} #{d.day} #{months_fr[d.month - 1]} #{d.year}"
+      .mb-6.mt-1.border-l-4.border-indigo-500.pl-4
+        p.text-xl.sm:text-2xl.font-semibold.text-gray-900.leading-snug
+          = date_phrase
+        - if t.hour != 0 || t.min != 0
+          p.mt-1.5.text-base.text-gray-600
+            | À 
+            = t.strftime("%H:%M")
+    - else
+      .mb-6.mt-1.border-l-4.border-gray-300.pl-4
+        p.text-base.text-gray-700
+          | Non renseignée
+        p.mt-1.text-xs.text-gray-500
+          | Fiche mise à jour le 
+          = l(@event.updated_at, format: :short)
 
   .px-6
     - if @event.body.present?
