@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_04_04_120000) do
+ActiveRecord::Schema[8.2].define(version: 2026_04_04_160000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,9 +97,12 @@ ActiveRecord::Schema[8.2].define(version: 2026_04_04_120000) do
   end
 
   create_table "gallery_photos", force: :cascade do |t|
+    t.bigint "attachable_id"
+    t.string "attachable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["attachable_type", "attachable_id"], name: "index_gallery_photos_on_attachable"
     t.index ["user_id"], name: "index_gallery_photos_on_user_id"
   end
 

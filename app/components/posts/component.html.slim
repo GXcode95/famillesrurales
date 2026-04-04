@@ -15,12 +15,16 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
     .text-gray-800.leading-relaxed.text-base.sm:text-lg.whitespace-pre-line
       = @post.body
 
-    - if @post.photos.attached?
-      .mt-4.flex.flex-wrap.gap-3
-        - @post.photos.each do |photo|
-          = link_to photo, target: "_blank", rel: "noopener" do
-            = image_tag photo.variant(resize_to_limit: [400, 400]),
-              class: "rounded-lg shadow-md hover:shadow-lg transition-shadow object-cover max-h-48"
+    - if @post.gallery_photos.any?
+      .mt-4.columns-2.sm:columns-3.lg:columns-4.gap-1
+        - @post.gallery_photos.each do |gp|
+          - next unless gp.image.attached?
+          article.break-inside-avoid.mb-1
+            = link_to url_for(gp.image.variant(resize_to_limit: [1600, 1600])), target: "_blank", rel: "noopener", class: "block overflow-hidden bg-gray-100"
+              = image_tag gp.image.variant(resize_to_limit: [900, 900]),
+                class: "w-full h-auto align-middle object-cover block",
+                alt: "",
+                loading: "lazy"
 
     - if @show_comments
       .mt-4.pt-4.border-t.border-gray-200

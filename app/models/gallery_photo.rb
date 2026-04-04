@@ -6,6 +6,7 @@ class GalleryPhoto < ApplicationRecord
   attr_accessor :tag_list, :images
 
   belongs_to :user
+  belongs_to :attachable, polymorphic: true, optional: true
   has_one_attached :image
   has_many :gallery_photo_tags, dependent: :destroy
   has_many :tags, through: :gallery_photo_tags

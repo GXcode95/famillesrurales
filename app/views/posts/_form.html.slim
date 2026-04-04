@@ -5,22 +5,11 @@
     .space-y-4
       = f.input :title, label: "Titre"
       = f.input :body, label: "Contenu", as: :text
-      - if @post.photos.attached?
-        .text-sm.text-gray-600.mb-2
-          | Photos actuelles :
-          .flex.flex-wrap.gap-2.mt-2
-            - @post.photos.each do |photo|
-              span.inline-flex.items-center.rounded-md.bg-gray-100.px-2.py-1.text-xs
-                = photo.filename.to_s.truncate(20)
-      = f.input :photos,
-        label: (@post.photos.attached? ? "Ajouter des photos" : "Photos"),
-        as: :file,
-        input_html: { multiple: true, accept: "image/*" },
-        hint: "Vous pouvez sélectionner plusieurs photos (JPEG, PNG, etc.)"
+
+    = render "shared/gallery_photos_fields", record: @post, param_key: "post"
 
     .mt-6.flex.justify-end.gap-3
       = link_to "Annuler", posts_path,
         class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
       = f.button :submit,
         class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
-

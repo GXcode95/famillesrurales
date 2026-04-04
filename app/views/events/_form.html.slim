@@ -6,22 +6,11 @@
       = f.input :name, label: "Nom"
       = f.input :date, label: "Date", as: :datetime
       = f.input :body, label: "Description", as: :text
-      - if @event.photos.attached?
-        .text-sm.text-gray-600.mb-2
-          | Photos actuelles :
-          .flex.flex-wrap.gap-2.mt-2
-            - @event.photos.each do |photo|
-              span.inline-flex.items-center.rounded-md.bg-gray-100.px-2.py-1.text-xs
-                = photo.filename.to_s.truncate(20)
-      = f.input :photos,
-        label: (@event.photos.attached? ? "Ajouter des photos" : "Photos"),
-        as: :file,
-        input_html: { multiple: true, accept: "image/*" },
-        hint: "Vous pouvez sélectionner plusieurs photos (JPEG, PNG, etc.)"
+
+    = render "shared/gallery_photos_fields", record: @event, param_key: "event"
 
     .mt-6.flex.justify-end.gap-3
       = link_to "Annuler", events_path,
         class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
       = f.button :submit,
         class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
-
