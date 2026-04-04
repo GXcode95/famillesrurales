@@ -13,10 +13,18 @@
 
       = f.input :pricing, label: "Tarif", as: :decimal
       = f.input :start_date, label: "Date de début", as: :date
+      = f.input :end_date, label: "Date de fin", as: :date
       = f.input :start_time, label: "Heure de début", as: :time
       = f.input :end_time, label: "Heure de fin", as: :time
 
-    = f.input :info, label: "Informations complémentaires"
+    div
+      = f.label :info, "Description", class: "block text-sm font-medium text-gray-700 mb-2"
+      p.text-xs.text-gray-500.mb-2
+        | Mise en forme complète : couleurs, tailles, titres, listes, tableaux, liens, etc.
+      = f.text_area :info,
+        rows: 16,
+        class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm font-mono",
+        data: { controller: "tinymce", tinymce_height_value: 440 }
 
     .mt-6.flex.justify-end.gap-3
       = link_to "Annuler", activities_path, class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"

@@ -19,8 +19,8 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
 
   .px-6
     - if @event.body.present?
-      .text-gray-800.leading-relaxed.text-base.sm:text-lg.whitespace-pre-line
-        = @event.body
+      .html-content.text-gray-800.max-w-none
+        == html_content(@event.body)
 
     - if @event.gallery_photos.any?
       .mt-4.columns-2.sm:columns-3.lg:columns-4.gap-1

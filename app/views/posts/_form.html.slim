@@ -4,7 +4,14 @@
 
     .space-y-4
       = f.input :title, label: "Titre"
-      = f.input :body, label: "Contenu", as: :text
+      div
+        = f.label :body, "Contenu", class: "block text-sm font-medium text-gray-700 mb-2"
+        p.text-xs.text-gray-500.mb-2
+          | Éditeur complet : couleurs, tailles, titres, listes, tableaux, liens, alignements, etc.
+        = f.text_area :body,
+          rows: 16,
+          class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm font-mono",
+          data: { controller: "tinymce", tinymce_height_value: 440 }
 
     = render "shared/gallery_photos_fields", record: @post, param_key: "post"
 

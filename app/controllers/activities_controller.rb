@@ -52,6 +52,7 @@ class ActivitiesController < ApplicationController
       :teacher_name,
       :pricing,
       :start_date,
+      :end_date,
       :start_time,
       :end_time,
       :category_id

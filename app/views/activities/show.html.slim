@@ -45,8 +45,12 @@
         dd.col-span-2.text-gray-900.space-y-1
           - if @activity.start_date.present?
             div
-              | Début : 
+              | Date de début : 
               = l(@activity.start_date)
+          - if @activity.end_date.present?
+            div
+              | Date de fin : 
+              = l(@activity.end_date)
           - if @activity.start_time.present?
             div
               | Heure de début : 
@@ -56,8 +60,10 @@
               | Heure de fin : 
               = @activity.end_time.strftime("%H:%M")
 
-      .py-3.grid.grid-cols-3.gap-4.text-sm
-        dt.font-medium.text-gray-500
-          | Informations
-        dd.col-span-2.text-gray-900.whitespace-pre-line
-          = @activity.info
+      - if @activity.info.present?
+        .py-3.grid.grid-cols-3.gap-4.text-sm
+          dt.font-medium.text-gray-500.align-top
+            | Description
+          dd.col-span-2.text-gray-900.max-w-none
+            .html-content
+              == html_content(@activity.info)
