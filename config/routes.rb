@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post "contact", to: "contact#create"
 
   resources :activities
-  resources :categories
+  resources :categories, except: [:show]
   resources :events do
     resources :comments, only: [:create, :destroy], controller: "comments"
   end
