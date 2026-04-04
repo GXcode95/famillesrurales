@@ -28,7 +28,7 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
                 loading: "lazy"
 
     - if @show_comments
-      .mt-4.pt-4.border-t.border-gray-200
+      .mt-4.pt-4.border-t.border-gray-200 data-controller="toggle"
         h3.text-sm.font-semibold.text-gray-900.mb-2
           | Commentaires
         - comments = @post.comments.order(created_at: :asc)
@@ -51,7 +51,16 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
         - else
           p.text-sm.text-gray-500.mb-4
             | Aucun commentaire pour le moment.
-        .pt-2
+
+        - form_id = "comment-form-post-#{@post.id}"
+        - panel_classes = %w[pt-2 mt-2 border-t border-gray-100]
+        - panel_classes << "hidden" unless comment.errors.any?
+        .mt-3
+          button.inline-flex.items-center.rounded-md.border.border-gray-300.bg-white.px-3.py-1.5.text-sm.font-medium.text-gray-700.shadow-sm.hover:bg-gray-50 type="button" data-action="click->toggle#toggle" data-toggle-target="trigger" aria-expanded=(comment.errors.any? ? "true" : "false") aria-controls=form_id
+            span data-toggle-target="buttonText"
+              = comment.errors.any? ? "Masquer le formulaire" : "Ajouter un commentaire"
+
+        div class=panel_classes.join(" ") data-toggle-target="panel" id=form_id
           = helpers.simple_form_for([@post, comment], url: post_comments_path(@post)) do |f|
             = f.error_notification
             .space-y-2
