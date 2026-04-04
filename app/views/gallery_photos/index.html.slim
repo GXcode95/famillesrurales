@@ -20,18 +20,19 @@
           onchange: "this.form.requestSubmit()"
 
   - if @gallery_photos.any?
-    .columns-2.sm:columns-3.lg:columns-4.gap-1
+    .columns-1.sm:columns-2.lg:columns-3.gap-1 data-controller="gallery-lightbox"
       - @gallery_photos.each do |photo|
         article.break-inside-avoid.mb-1
           .relative.group
             - if photo.image.attached?
-              = link_to url_for(photo.image.variant(resize_to_limit: [1600, 1600])), target: "_blank", rel: "noopener", class: "block overflow-hidden bg-gray-100"
+              - full_src = url_for(photo.image.variant(resize_to_limit: [1600, 1600]))
+              button.block.w-full.overflow-hidden.bg-gray-100.text-left.cursor-pointer.focus:outline-none.focus:ring-2.focus:ring-indigo-500.focus:ring-offset-1 type="button" data-lightbox-src=full_src data-action="click->gallery-lightbox#open"
                 = image_tag photo.image.variant(resize_to_limit: [900, 900]),
-                  class: "w-full h-auto align-middle object-cover block",
+                  class: "w-full h-auto align-middle object-cover block pointer-events-none",
                   alt: "",
                   loading: "lazy"
             - if user_signed_in?
-              .absolute.top-2.right-2.opacity-0.transition-opacity.duration-150.group-hover:opacity-100.focus-within:opacity-100
+              .absolute.top-2.right-2.opacity-0.transition-opacity.duration-150.group-hover:opacity-100.focus-within:opacity-100.z-10
                 = button_to "Supprimer",
                   gallery_photo_path(photo),
                   method: :delete,
