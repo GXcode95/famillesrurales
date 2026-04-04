@@ -1,0 +1,50 @@
+- content_for :title, "Galerie — Familles Rurales"
+
+.w-full
+  .flex.flex-col.sm:flex-row.sm:items-center.sm:justify-between.gap-4.mb-6
+    h1.text-2xl.font-bold.text-gray-900
+      | Galerie
+    - if user_signed_in?
+      = link_to "Ajouter des photos", new_gallery_photo_path,
+        class: "inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+
+  - if @filter_tags.any?
+    .mb-6.max-w-sm
+      = form_with url: gallery_photos_path, method: :get, class: "space-y-1" do
+        label.block.text-sm.font-medium.text-gray-700 for="gallery_tag_filter"
+          | Filtrer par tag
+        = select_tag :tag_id,
+          options_for_select([["Toutes les photos", ""]] + @filter_tags.map { |t| [t.name, t.id] }, @selected_tag_id),
+          id: "gallery_tag_filter",
+          class: "block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500",
+          onchange: "this.form.requestSubmit()"
+
+  - if @gallery_photos.any?
+    .columns-2.sm:columns-3.lg:columns-4.gap-1
+      - @gallery_photos.each do |photo|
+        article.break-inside-avoid.mb-1
+          .relative.group
+            - if photo.image.attached?
+              = link_to url_for(photo.image.variant(resize_to_limit: [1600, 1600])), target: "_blank", rel: "noopener", class: "block overflow-hidden bg-gray-100"
+                = image_tag photo.image.variant(resize_to_limit: [900, 900]),
+                  class: "w-full h-auto align-middle object-cover block",
+                  alt: "",
+                  loading: "lazy"
+            - if user_signed_in?
+              .absolute.top-2.right-2.opacity-0.transition-opacity.duration-150.group-hover:opacity-100.focus-within:opacity-100
+                = button_to "Supprimer",
+                  gallery_photo_path(photo),
+                  method: :delete,
+                  form: { class: "inline" },
+                  data: { turbo_confirm: "Supprimer cette photo ?" },
+                  class: "rounded bg-white/95 px-2 py-1 text-xs font-medium text-red-600 shadow-md ring-1 ring-black/10 hover:bg-red-50"
+
+    - if @pagy.pages > 1
+      .mt-8.flex.justify-center
+        == pagy_nav(@pagy)
+  - else
+    p.text-gray-600
+      - if @selected_tag_id.present?
+        | Aucune photo pour ce tag.
+      - else
+        | Aucune photo pour le moment.

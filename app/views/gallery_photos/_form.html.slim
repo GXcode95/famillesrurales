@@ -1,0 +1,24 @@
+.bg-white.shadow-lg.rounded-lg.p-6
+  = simple_form_for(@gallery_photo, url: gallery_photos_path, html: { multipart: true }) do |f|
+    = f.error_notification
+
+    .space-y-4
+      = f.input :images,
+        label: "Images",
+        as: :file,
+        required: true,
+        input_html: { multiple: true, accept: "image/jpeg,image/png,image/gif,image/webp" },
+        hint: "Sélectionnez une ou plusieurs images (JPEG, PNG, GIF ou WebP)."
+
+      = f.input :tag_list,
+        label: "Tags",
+        required: false,
+        as: :string,
+        input_html: { placeholder: "ex. : sortie, été, nature" },
+        hint: "Ces tags seront appliqués à toutes les photos de cet envoi. Séparez-les par des virgules."
+
+    .mt-6.flex.justify-end.gap-3
+      = link_to "Annuler", gallery_photos_path,
+        class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      = f.button :submit, "Envoyer",
+        class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
