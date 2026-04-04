@@ -2,42 +2,42 @@
 
 .w-full.max-w-5xl.mx-auto
   .flex.flex-col.sm:flex-row.sm:items-center.sm:justify-between.gap-4.mb-6
-    h1.text-2xl.font-bold.text-gray-900
+    h1.text-2xl.font-bold.text-zinc-900
       | Calendrier des événements
 
     .flex.flex-wrap.items-center.gap-2
-      = link_to calendar_path(month: @prev_month, year: @prev_year), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" do
+      = link_to calendar_path(month: @prev_month, year: @prev_year), class: "inline-flex items-center rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-700 shadow-sm hover:bg-zinc-50" do
         span.sr-only Mois précédent
         span aria-hidden="true" ‹
 
       = form_with url: calendar_path, method: :get, class: "flex flex-wrap items-center gap-2", data: { turbo_frame: "_top" } do
-        = select_tag :month, options_for_select(calendar_month_options, @month), class: "rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500", onchange: "this.form.requestSubmit()"
-        = select_tag :year, options_for_select(calendar_year_options, @year), class: "rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500", onchange: "this.form.requestSubmit()"
+        = select_tag :month, options_for_select(calendar_month_options, @month), class: "rounded-md border border-zinc-300 bg-white py-2 pl-3 pr-8 text-sm text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500", onchange: "this.form.requestSubmit()"
+        = select_tag :year, options_for_select(calendar_year_options, @year), class: "rounded-md border border-zinc-300 bg-white py-2 pl-3 pr-8 text-sm text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500", onchange: "this.form.requestSubmit()"
 
-      = link_to calendar_path(month: @next_month, year: @next_year), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" do
+      = link_to calendar_path(month: @next_month, year: @next_year), class: "inline-flex items-center rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-700 shadow-sm hover:bg-zinc-50" do
         span.sr-only Mois suivant
         span aria-hidden="true" ›
 
-  .rounded-xl.border.border-gray-200.bg-white.shadow-sm.overflow-hidden
-    .grid.grid-cols-7.gap-px.bg-gray-200.text-center.text-xs.font-semibold.text-gray-600
+  .rounded-xl.border.border-zinc-200.bg-white.shadow-sm.overflow-hidden
+    .grid.grid-cols-7.gap-px.bg-zinc-200.text-center.text-xs.font-semibold.text-zinc-600
       - CalendarHelper::WEEKDAY_LABELS_FR.each do |label|
-        .bg-gray-50.py-2
+        .bg-zinc-50.py-2
           = label
 
-    .grid.grid-cols-7.gap-px.bg-gray-200
+    .grid.grid-cols-7.gap-px.bg-zinc-200
       - @calendar_weeks.each do |week|
         - week.each do |day|
           - in_month = day >= @month_start && day <= @month_end
           - day_events = @events_by_day[day] || []
           - cell_classes = ["min-h-[5.5rem]", "bg-white", "p-1", "sm:min-h-24", "sm:p-2"]
-          - cell_classes << "bg-gray-50/80" unless in_month
+          - cell_classes << "bg-zinc-50/80" unless in_month
           div class=cell_classes.join(" ")
             .mb-1.flex.items-start.justify-between.gap-1
-              - day_num_classes = ["text-sm", "font-medium", in_month ? "text-gray-900" : "text-gray-400"]
+              - day_num_classes = ["text-sm", "font-medium", in_month ? "text-zinc-900" : "text-zinc-400"]
               span class=day_num_classes.join(" ")
                 = day.day
             - if day_events.any?
               ul.space-y-0.5
                 - day_events.each do |event|
                   li.truncate.leading-tight
-                    = link_to event.name, event_path(event), class: "text-xs text-indigo-700 hover:text-indigo-900 hover:underline sm:text-sm", title: event.name
+                    = link_to event.name, event_path(event), class: "text-xs text-blue-700 hover:text-blue-900 hover:underline sm:text-sm", title: event.name

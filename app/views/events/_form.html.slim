@@ -6,18 +6,18 @@
       = f.input :name, label: "Nom"
       = f.input :date, label: "Date", as: :datetime
       div
-        = f.label :body, "Description", class: "block text-sm font-medium text-gray-700 mb-2"
-        p.text-xs.text-gray-500.mb-2
+        = f.label :body, "Description", class: "block text-sm font-medium text-zinc-700 mb-2"
+        p.text-xs.text-zinc-500.mb-2
           | Éditeur complet : couleurs, tailles, titres, listes, tableaux, liens, alignements, etc.
         = f.text_area :body,
           rows: 16,
-          class: "block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm font-mono",
+          class: "block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-900 shadow-sm font-mono",
           data: { controller: "tinymce", tinymce_height_value: 440 }
 
     = render "shared/gallery_photos_fields", record: @event, param_key: "event"
 
     .mt-6.flex.justify-end.gap-3
       = link_to "Annuler", events_path,
-        class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        class: "inline-flex items-center rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
       = f.button :submit,
-        class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+        class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"

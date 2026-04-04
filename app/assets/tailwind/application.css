@@ -1,30 +1,42 @@
 @import "tailwindcss";
+
+@theme {
+  /* Verdana : police système, très lisible ; repli Geneva (macOS), puis sans-serif générique */
+  --font-sans: Verdana, Geneva, ui-sans-serif, system-ui, sans-serif;
+}
+
 @import "./pagy.tailwind.css";
 
-/* Affichage HTML (TinyMCE) — styles de base ; couleurs/tailles viennent du contenu */
+@layer base {
+  ::selection {
+    @apply bg-blue-200/80 text-blue-950;
+  }
+}
+
+/* Affichage HTML (TinyMCE) — bleu liens, orange citations, neutres zinc */
 @layer components {
   .html-content {
-    @apply text-base leading-relaxed sm:text-lg overflow-x-auto;
+    @apply text-base leading-relaxed text-zinc-700 sm:text-lg overflow-x-auto;
   }
 
   .html-content h1 {
-    @apply text-2xl font-bold text-gray-900 sm:text-3xl mt-6 mb-3 first:mt-0;
+    @apply text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl mt-6 mb-3 first:mt-0;
   }
 
   .html-content h2 {
-    @apply text-xl font-bold text-gray-900 mt-5 mb-2;
+    @apply text-xl font-semibold tracking-tight text-zinc-950 mt-5 mb-2;
   }
 
   .html-content h3 {
-    @apply text-lg font-semibold text-gray-900 mt-4 mb-2;
+    @apply text-lg font-semibold text-zinc-950 mt-4 mb-2;
   }
 
   .html-content h4 {
-    @apply text-base font-semibold text-gray-900 mt-3 mb-1;
+    @apply text-base font-semibold text-zinc-950 mt-3 mb-1;
   }
 
   .html-content blockquote {
-    @apply border-l-4 border-indigo-200 pl-4 italic text-gray-700 my-4;
+    @apply border-l-4 border-orange-200 bg-orange-50/50 pl-4 py-1 italic text-zinc-700 my-4 rounded-r-lg;
   }
 
   .html-content ul {
@@ -36,11 +48,11 @@
   }
 
   .html-content a {
-    @apply text-indigo-600 underline underline-offset-2 hover:text-indigo-800;
+    @apply font-medium text-blue-700 underline decoration-blue-300 underline-offset-2 hover:text-blue-900;
   }
 
   .html-content pre {
-    @apply bg-gray-100 rounded-lg p-3 overflow-x-auto text-sm text-gray-800 my-3 font-mono;
+    @apply bg-zinc-100 rounded-xl p-3 overflow-x-auto text-sm text-zinc-800 my-3 font-mono border border-zinc-200/80;
   }
 
   .html-content p {
@@ -53,10 +65,14 @@
 
   .html-content th,
   .html-content td {
-    @apply border border-gray-200 px-2 py-1 align-top;
+    @apply border border-zinc-200 px-2 py-1 align-top;
   }
 
   .html-content img {
-    @apply max-w-full h-auto rounded-md my-2;
+    @apply max-w-full h-auto rounded-xl my-2 border border-zinc-100 shadow-sm;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-zinc-200/80 bg-white shadow-sm shadow-zinc-950/5;
   }
 }

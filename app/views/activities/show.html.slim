@@ -1,47 +1,47 @@
 .w-full.max-w-3xl.mx-auto.space-y-6
   .flex.items-center.justify-between
-    h1.text-2xl.font-bold.text-gray-900
+    h1.text-2xl.font-bold.text-zinc-900
       = @activity.name
     .flex.gap-3
       - if user_signed_in?
-        = link_to "Modifier", edit_activity_path(@activity), class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+        = link_to "Modifier", edit_activity_path(@activity), class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
 
   .bg-white.shadow-sm.rounded-lg.p-6.space-y-4
-    dl.divide-y.divide-gray-200
+    dl.divide-y.divide-zinc-200
       .py-3.grid.grid-cols-3.gap-4.text-sm
-        dt.font-medium.text-gray-500
+        dt.font-medium.text-zinc-500
           | Catégorie
-        dd.col-span-2.text-gray-900
+        dd.col-span-2.text-zinc-900
           = @activity.category&.name
 
       .py-3.grid.grid-cols-3.gap-4.text-sm
-        dt.font-medium.text-gray-500
+        dt.font-medium.text-zinc-500
           | Responsable
-        dd.col-span-2.text-gray-900
+        dd.col-span-2.text-zinc-900
           = @activity.manager_name
           - if @activity.manager_email.present?
-            .text-gray-500
+            .text-zinc-500
               = @activity.manager_email
           - if @activity.manager_phone.present?
-            .text-gray-500
+            .text-zinc-500
               = @activity.manager_phone
 
       .py-3.grid.grid-cols-3.gap-4.text-sm
-        dt.font-medium.text-gray-500
+        dt.font-medium.text-zinc-500
           | Intervenant
-        dd.col-span-2.text-gray-900
+        dd.col-span-2.text-zinc-900
           = @activity.teacher_name
 
       .py-3.grid.grid-cols-3.gap-4.text-sm
-        dt.font-medium.text-gray-500
+        dt.font-medium.text-zinc-500
           | Tarif
-        dd.col-span-2.text-gray-900
+        dd.col-span-2.text-zinc-900
           = @activity.pricing
 
       .py-3.grid.grid-cols-3.gap-4.text-sm
-        dt.font-medium.text-gray-500
+        dt.font-medium.text-zinc-500
           | Horaires
-        dd.col-span-2.text-gray-900.space-y-1
+        dd.col-span-2.text-zinc-900.space-y-1
           - if @activity.start_date.present?
             div
               | Date de début : 
@@ -61,8 +61,8 @@
 
       - if @activity.info.present?
         .py-3.grid.grid-cols-3.gap-4.text-sm
-          dt.font-medium.text-gray-500.align-top
+          dt.font-medium.text-zinc-500.align-top
             | Description
-          dd.col-span-2.text-gray-900.max-w-none
+          dd.col-span-2.text-zinc-900.max-w-none
             .html-content
               == html_content(@activity.info)

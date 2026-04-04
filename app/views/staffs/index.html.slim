@@ -1,18 +1,18 @@
 .w-full
   .flex.flex-col.sm:flex-row.sm:items-center.sm:justify-between.gap-4.mb-8
     div
-      h1.text-2xl.sm:text-3xl.font-bold.text-gray-900
+      h1.text-2xl.sm:text-3xl.font-bold.text-zinc-900
         | Conseil d'Administration
-      p.text-gray-500.mt-1
+      p.text-zinc-500.mt-1
         | Les membres de notre association
     - if user_signed_in?
       = link_to "Nouveau membre", new_staff_path,
-        class: "inline-flex shrink-0 items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+        class: "inline-flex shrink-0 items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
 
   - if @staffs.any?
     .grid.grid-cols-1.sm:grid-cols-2.lg:grid-cols-3.gap-6
       - @staffs.each do |staff|
-        article.bg-white.rounded-xl.shadow-md.border.border-gray-100.overflow-hidden.hover:shadow-lg.transition-shadow.duration-200
+        article.bg-white.rounded-xl.shadow-md.border.border-zinc-100.overflow-hidden.hover:shadow-lg.transition-shadow.duration-200
           .p-6.flex.flex-col.items-center.text-center
             / Photo ou avatar avec initiales
             .w-20.h-20.rounded-full.mb-4.overflow-hidden.flex-shrink-0
@@ -20,36 +20,36 @@
                 = image_tag staff.photo.variant(resize_to_fill: [80, 80]),
                   class: "w-full h-full object-cover"
               - else
-                .w-full.h-full.bg-indigo-100.flex.items-center.justify-center
-                  span.text-2xl.font-semibold.text-indigo-700
+                .w-full.h-full.bg-blue-100.flex.items-center.justify-center
+                  span.text-2xl.font-semibold.text-blue-700
                     = (staff.name.to_s.split.map(&:first).first(2).join.upcase).presence || "?"
 
-            h2.text-lg.font-semibold.text-gray-900
+            h2.text-lg.font-semibold.text-zinc-900
               = staff.name
 
             - if staff.job.present?
-              p.text-indigo-600.text-sm.font-medium.mt-1
+              p.text-blue-600.text-sm.font-medium.mt-1
                 = staff.job
 
             .mt-4.space-y-2.w-full.text-center
               - if staff.email.present?
                 = link_to staff.email, "mailto:#{staff.email}",
-                  class: "block text-sm text-gray-600 hover:text-indigo-600 transition-colors truncate"
+                  class: "block text-sm text-zinc-600 hover:text-blue-600 transition-colors truncate"
 
               - if staff.phone.present?
                 = link_to staff.phone, "tel:#{staff.phone.gsub(/\s/, '')}",
-                  class: "block text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+                  class: "block text-sm text-zinc-600 hover:text-blue-600 transition-colors"
 
             - if user_signed_in?
-              .mt-4.pt-4.border-t.border-gray-100.flex.gap-2.justify-center.flex-wrap
+              .mt-4.pt-4.border-t.border-zinc-100.flex.gap-2.justify-center.flex-wrap
                 = link_to "Modifier", edit_staff_path(staff),
-                  class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-700"
+                  class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
                 = button_to "Supprimer", staff, method: :delete, data: { confirm: "Supprimer ce membre ?" },
                   class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
   - else
-    .bg-white.rounded-xl.shadow-md.border.border-gray-100.p-12.text-center
-      p.text-gray-500.text-lg
+    .bg-white.rounded-xl.shadow-md.border.border-zinc-100.p-12.text-center
+      p.text-zinc-500.text-lg
         Aucun membre pour le moment.
       - if user_signed_in?
         = link_to "Ajouter le premier membre", new_staff_path,
-          class: "inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 mt-4"
+          class: "inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 mt-4"

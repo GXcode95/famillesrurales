@@ -1,100 +1,101 @@
 / mobile overlay
-#sidebar-overlay.fixed.inset-0.bg-black.bg-opacity-50.z-40.hidden data-sidebar-target="overlay" data-action="click->sidebar#toggle"
+#sidebar-overlay.fixed.inset-0.z-40.hidden.bg-zinc-950/40.backdrop-blur-sm data-sidebar-target="overlay" data-action="click->sidebar#toggle"
 
 / hidden sidebar ( toggleable on all devices)
-#sidebar.fixed.left-0.top-0.h-full.bg-white.shadow-lg.z-50.w-64.transition-transform.duration-300.ease-in-out.flex.flex-col.-translate-x-full data-sidebar-target="sidebar"
-  
+#sidebar.fixed.left-0.top-0.z-50.flex.h-full.w-72.-translate-x-full.flex-col.border-r.border-zinc-200/90.bg-white.transition-transform.duration-300.ease-in-out data-sidebar-target="sidebar"
+
   / sidebar header
-  .p-4.border-b.border-gray-200.flex.items-center.justify-between
-    = link_to root_path, class: "text-lg font-bold text-indigo-700 hover:text-indigo-900"
+  .flex.items-center.justify-between.border-b.border-zinc-100.p-5
+    = link_to root_path, class: brand_link_classes
       | Familles Rurales
-    / chevron button to close sidebar
-    button.text-gray-500.hover:text-gray-700 data-action="click->sidebar#toggle"
-      = svg_tag("chevron-left", class: "w-6 h-6")
+    button.rounded-lg.p-2.text-zinc-500.transition-colors.hover:bg-zinc-100.hover:text-zinc-800 data-action="click->sidebar#toggle" aria-label="Fermer le menu"
+      = svg_tag("chevron-left", class: "h-6 w-6")
 
   / main navigation
   .flex-1.overflow-y-auto.py-4
-    nav.space-y-1.px-2
-      = link_to root_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-        = svg_tag("home", class: "w-5 h-5 mr-3")
+    nav.space-y-0.5.px-3
+      = link_to root_path, class: nav_item_classes(root_path, exact: true)
+        = svg_tag("home", class: "w-5 h-5 mr-3 shrink-0")
         | Accueil
 
-      = link_to posts_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-        = svg_tag("document", class: "w-5 h-5 mr-3")
+      = link_to posts_path, class: nav_item_classes(posts_path)
+        = svg_tag("document", class: "w-5 h-5 mr-3 shrink-0")
         | Nouvelles
 
-      = link_to gallery_photos_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-        = svg_tag("clipboard", class: "w-5 h-5 mr-3")
+      = link_to gallery_photos_path, class: nav_item_classes(gallery_photos_path)
+        = svg_tag("clipboard", class: "w-5 h-5 mr-3 shrink-0")
         | Galerie
 
-      = link_to calendar_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-        = svg_tag("calendar_grid", class: "w-5 h-5 mr-3")
+      = link_to calendar_path, class: nav_item_classes(calendar_path, exact: true)
+        = svg_tag("calendar_grid", class: "w-5 h-5 mr-3 shrink-0")
         | Calendrier
 
-      = link_to staffs_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-        = svg_tag("users", class: "w-5 h-5 mr-3")
+      = link_to staffs_path, class: nav_item_classes(staffs_path)
+        = svg_tag("users", class: "w-5 h-5 mr-3 shrink-0")
         | Administration
 
-      = link_to contact_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-        = svg_tag("document", class: "w-5 h-5 mr-3")
+      = link_to contact_path, class: nav_item_classes(contact_path, exact: true)
+        = svg_tag("document", class: "w-5 h-5 mr-3 shrink-0")
         | Contact
 
       - @events.each do |event|
-        = link_to event_path(event), class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-          = svg_tag("calendar", class: "w-5 h-5 mr-3")
+        = link_to event_path(event), class: nav_item_classes(event_path(event), exact: true)
+          = svg_tag("calendar", class: "w-5 h-5 mr-3 shrink-0")
           = event.name
 
       - @categories.each do |category|
         .mt-1 data-controller="category-menu"
-          button.w-full.flex.items-center.justify-between.px-4.py-2.text-sm.font-medium.text-gray-700.rounded-md.hover:bg-indigo-50.hover:text-indigo-700 data-action="click->category-menu#toggle"
-            .flex.items-center
-              = svg_tag("tag", class: "w-4 h-4 mr-2")
-              = category.name
+          button class=category_button_classes(category) data-action="click->category-menu#toggle"
+            .flex.min-w-0.items-center
+              = svg_tag("tag", class: "w-4 h-4 mr-2 shrink-0")
+              span.truncate
+                = category.name
             span data-category-menu-target="icon"
-              = svg_tag("chevron-right", class: "w-4 h-4 transition-transform duration-200")
+              = svg_tag("chevron-right", class: "w-4 h-4 shrink-0 transition-transform duration-200")
           .hidden.ml-4.mt-1.space-y-1 data-category-menu-target="menu"
             - if category.activities.any?
               - category.activities.each do |activity|
-                = link_to activity_path(activity), class: "flex items-center px-4 py-2 text-sm text-gray-600 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-                  = svg_tag("clipboard", class: "w-4 h-4 mr-2")
-                  = activity.name
+                = link_to activity_path(activity), class: nav_subitem_classes(activity_path(activity))
+                  = svg_tag("clipboard", class: "w-4 h-4 mr-2 shrink-0")
+                  span.truncate
+                    = activity.name
             - else
-              p.px-4.py-2.text-xs.text-gray-500
+              p.px-4.py-2.text-xs.text-zinc-500
                 | Aucune activité
 
   / user section at the bottom of the sidebar
   / TODO; Remove later
-  .p-4.border-t.border-gray-200
+  .border-t.border-zinc-100.p-4
     - if user_signed_in?
-      span.text-xs.text-gray-500.mb-1
+      span.text-xs.text-zinc-500.mb-1
         | Admin :
       .space-y-1
-        = link_to events_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-          = svg_tag("calendar", class: "w-5 h-5 mr-3")
+        = link_to events_path, class: nav_item_classes(events_path)
+          = svg_tag("calendar", class: "w-5 h-5 mr-3 shrink-0")
           | Événements
-        = link_to posts_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-          = svg_tag("document", class: "w-5 h-5 mr-3")
+        = link_to posts_path, class: nav_item_classes(posts_path)
+          = svg_tag("document", class: "w-5 h-5 mr-3 shrink-0")
           | Articles
-        = link_to staffs_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-          = svg_tag("users", class: "w-5 h-5 mr-3")
+        = link_to staffs_path, class: nav_item_classes(staffs_path)
+          = svg_tag("users", class: "w-5 h-5 mr-3 shrink-0")
           | Staff
-        = link_to activities_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-          = svg_tag("clipboard", class: "w-5 h-5 mr-3")
+        = link_to activities_path, class: nav_item_classes(activities_path)
+          = svg_tag("clipboard", class: "w-5 h-5 mr-3 shrink-0")
           | Activités
-        = link_to categories_path, class: "flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-indigo-50 hover:text-indigo-700"
-          = svg_tag("tag", class: "w-5 h-5 mr-3")
+        = link_to categories_path, class: nav_item_classes(categories_path)
+          = svg_tag("tag", class: "w-5 h-5 mr-3 shrink-0")
           | Catégories
 
     - if user_signed_in?
       .mb-3
-        p.text-xs.text-gray-500.mb-1
+        p.text-xs.text-zinc-500.mb-1
           | Connecté en tant que
-        p.text-sm.font-semibold.text-gray-900
+        p.text-sm.font-semibold.text-zinc-900
           = current_user&.email
       .space-y-2
-        = link_to "Mon compte", edit_user_registration_path, class: "block w-full text-center px-4 py-2 text-sm font-medium text-indigo-700 bg-indigo-50 rounded-md hover:bg-indigo-100"
-        = button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "block w-full px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+        = link_to "Mon compte", edit_user_registration_path, class: "block w-full rounded-xl border border-blue-200/80 bg-blue-50/80 px-4 py-2.5 text-center text-sm font-medium text-blue-900 transition hover:bg-blue-100"
+        = button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "block w-full rounded-xl bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
     - else
       .space-y-2
-        = link_to "Connexion", new_user_session_path, class: "block w-full text-center px-4 py-2 text-sm font-medium text-indigo-700 bg-white border border-indigo-300 rounded-md hover:bg-gray-50"
-        = link_to "Inscription", new_user_registration_path, class: "block w-full text-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
+        = link_to "Connexion", new_user_session_path, class: "block w-full rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-center text-sm font-medium text-zinc-800 transition hover:bg-zinc-50"
+        = link_to "Inscription", new_user_registration_path, class: "block w-full rounded-xl bg-blue-600 px-4 py-2.5 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"

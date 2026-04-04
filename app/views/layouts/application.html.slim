@@ -1,5 +1,5 @@
 doctype 5
-html
+html lang="fr"
   head
     title
       = content_for(:title) || "Familles Rurales"
@@ -22,22 +22,18 @@ html
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = javascript_importmap_tags
 
-  body.bg-gray-50.min-h-screen.flex data-controller="sidebar"
-    = render Sidebar::Component.new(current_user: current_user)
+  body.min-h-screen.bg-zinc-100.font-sans.antialiased.text-zinc-900.flex data-controller="sidebar"
+    = render Sidebar::Component.new(current_user: current_user, request_path: request.path)
 
-    / Contenu principal avec marge pour la sidebar
     .flex-1.flex.flex-col.md:ml-0.transition-all.duration-300 data-sidebar-target="content"
-      / Barre supérieure avec bouton menu
-      header.bg-white.shadow.sticky.top-0.z-30 data-sidebar-target="header"
-        .flex.items-center.gap-4.px-4.py-3
-          button.text-gray-500.hover:text-gray-700 data-action="click->sidebar#toggle" data-sidebar-target="menuButton"
-            = svg_tag("menu", class: "w-6 h-6")
-          = link_to root_path, class: "text-lg font-bold text-indigo-700"
+      header.sticky.top-0.z-30.border-b.border-zinc-200/90.bg-white/85.backdrop-blur-md data-sidebar-target="header"
+        .mx-auto.flex.w-full.max-w-6xl.items-center.gap-3.px-4.py-3.sm:gap-4.sm:px-6
+          button.rounded-lg.p-2.text-zinc-600.transition-colors.hover:bg-zinc-100.hover:text-zinc-900 data-action="click->sidebar#toggle" data-sidebar-target="menuButton" aria-label="Ouvrir le menu"
+            = svg_tag("menu", class: "h-6 w-6")
+          = link_to root_path, class: "text-[1.05rem] font-semibold tracking-tight text-zinc-900 transition hover:text-blue-700"
             | Familles Rurales
 
-      / Messages flash
       = render FlashComponent.new(notice: notice, alert: alert)
 
-      / Contenu principal
-      main.flex-1.p-5
+      main.mx-auto.w-full.max-w-6xl.flex-1.px-4.py-8.sm:px-6.sm:py-10
         = yield

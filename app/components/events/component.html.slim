@@ -1,13 +1,13 @@
-article.px-4.py-2.border.border-gray-200.shadow-lg.relative
+article.surface-card.relative.overflow-hidden.px-5.py-6.sm:px-7
   - if @editable
-    .absolute.top-2.right-2.z-10.flex.flex-row.gap-2
-      = link_to "Modifier", edit_event_path(@event), class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
-      = button_to "Supprimer", @event, method: :delete, data: { confirm: "Supprimer cet événement ?" }, class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700"
+    .absolute.right-4.top-4.z-10.flex.flex-row.gap-2.sm:right-6.sm:top-5
+      = link_to "Modifier", edit_event_path(@event), class: "inline-flex items-center rounded-lg border border-transparent bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+      = button_to "Supprimer", @event, method: :delete, data: { confirm: "Supprimer cet événement ?" }, class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700"
 
-  header.pt-2.sm:pt-4 class=(@editable ? "pr-2 sm:pr-44" : "")
-    h1.text-3xl.sm:text-4xl.lg:text-5xl.font-bold.text-black.mb-3.leading-tight.uppercase.tracking-wide
+  header.pt-1.sm:pt-0 class=(@editable ? "pr-2 sm:pr-44" : "")
+    h1.text-3xl.font-semibold.tracking-tight.text-zinc-950.sm:text-4xl.lg:text-5xl.lg:leading-tight.mb-3
       - if @link_to_show
-        = link_to @event.name, @event, class: "hover:underline"
+        = link_to @event.name, @event, class: "text-zinc-950 transition hover:text-blue-700"
       - else
         = @event.name
 
@@ -17,24 +17,24 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
       - wdays = %w[dimanche lundi mardi mercredi jeudi vendredi samedi]
       - months_fr = CalendarHelper::MONTH_NAMES_FR
       - date_phrase = "#{wdays[d.wday].capitalize} #{d.day} #{months_fr[d.month - 1]} #{d.year}"
-      .mb-6.mt-1.border-l-4.border-indigo-500.pl-4
-        p.text-xl.sm:text-2xl.font-semibold.text-gray-900.leading-snug
+      .mb-6.mt-1.border-l-4.border-orange-500.pl-4
+        p.text-xl.sm:text-2xl.font-semibold.text-zinc-900.leading-snug
           = date_phrase
         - if t.hour != 0 || t.min != 0
-          p.mt-1.5.text-base.text-gray-600
+          p.mt-1.5.text-base.text-zinc-600
             | À 
             = t.strftime("%H:%M")
     - else
-      .mb-6.mt-1.border-l-4.border-gray-300.pl-4
-        p.text-base.text-gray-700
+      .mb-6.mt-1.border-l-4.border-zinc-300.pl-4
+        p.text-base.text-zinc-700
           | Non renseignée
-        p.mt-1.text-xs.text-gray-500
+        p.mt-1.text-xs.text-zinc-500
           | Fiche mise à jour le 
           = l(@event.updated_at, format: :short)
 
-  .px-6
+  .px-0.sm:px-1
     - if @event.body.present?
-      .html-content.text-gray-800.max-w-none
+      .html-content.text-zinc-800.max-w-none
         == html_content(@event.body)
 
     - if @event.gallery_photos.any?
@@ -43,42 +43,42 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
           - next unless gp.image.attached?
           - full_src = helpers.url_for(gp.image.variant(resize_to_limit: [1600, 1600]))
           article.break-inside-avoid.mb-1
-            button.block.w-full.overflow-hidden.bg-gray-100.text-left.cursor-pointer.focus:outline-none.focus:ring-2.focus:ring-indigo-500.focus:ring-offset-1 type="button" data-lightbox-src=full_src data-action="click->gallery-lightbox#open"
+            button.block.w-full.overflow-hidden.bg-zinc-100.text-left.cursor-pointer.focus:outline-none.focus:ring-2.focus:ring-blue-500.focus:ring-offset-1 type="button" data-lightbox-src=full_src data-action="click->gallery-lightbox#open"
               = image_tag gp.image.variant(resize_to_limit: [900, 900]),
                 class: "w-full h-auto align-middle object-cover block pointer-events-none",
                 alt: "",
                 loading: "lazy"
 
     - if @show_comments
-      .mt-4.pt-4.border-t.border-gray-200 data-controller="toggle"
-        h3.text-sm.font-semibold.text-gray-900.mb-2
+      .mt-4.pt-4.border-t.border-zinc-200 data-controller="toggle"
+        h3.text-sm.font-semibold.text-zinc-900.mb-2
           | Commentaires
         - comments = @event.comments.order(created_at: :asc)
         - if comments.any?
           ul.space-y-2.mb-4
             - comments.each do |c|
-              li.text-sm.text-gray-700.space-y-1
+              li.text-sm.text-zinc-700.space-y-1
                 .flex.items-center.justify-between
                   span.font-medium
                     = c.author.presence || "Anonyme"
                     - if @signed_in && c.email.present?
-                      span.text-gray-500.text-xs.ml-2
+                      span.text-zinc-500.text-xs.ml-2
                         | (
                         = c.email
                         | )
                   - if @signed_in
                     = button_to "Supprimer", event_comment_path(@event, c), method: :delete, data: { confirm: "Supprimer ce commentaire ?" }, class: "inline-flex rounded-md border border-transparent bg-red-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-red-700"
-                p.text-gray-700.whitespace-pre-line
+                p.text-zinc-700.whitespace-pre-line
                   = c.content
         - else
-          p.text-sm.text-gray-500.mb-4
+          p.text-sm.text-zinc-500.mb-4
             | Aucun commentaire pour le moment.
 
         - form_id = "comment-form-event-#{@event.id}"
-        - panel_classes = %w[pt-2 mt-2 border-t border-gray-100]
+        - panel_classes = %w[pt-2 mt-2 border-t border-zinc-100]
         - panel_classes << "hidden" unless comment.errors.any?
         .mt-3
-          button.inline-flex.items-center.rounded-md.border.border-gray-300.bg-white.px-3.py-1.5.text-sm.font-medium.text-gray-700.shadow-sm.hover:bg-gray-50 type="button" data-action="click->toggle#toggle" data-toggle-target="trigger" aria-expanded=(comment.errors.any? ? "true" : "false") aria-controls=form_id
+          button.inline-flex.items-center.rounded-md.border.border-zinc-300.bg-white.px-3.py-1.5.text-sm.font-medium.text-zinc-700.shadow-sm.hover:bg-zinc-50 type="button" data-action="click->toggle#toggle" data-toggle-target="trigger" aria-expanded=(comment.errors.any? ? "true" : "false") aria-controls=form_id
             span data-toggle-target="buttonText"
               = comment.errors.any? ? "Masquer le formulaire" : "Ajouter un commentaire"
 
@@ -90,4 +90,4 @@ article.px-4.py-2.border.border-gray-200.shadow-lg.relative
               = f.input :email, label: "Email (optionnel)", required: false
               = f.input :content, label: "Commentaire", as: :text
             .mt-2
-              = f.button :submit, "Publier", class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"
+              = f.button :submit, "Publier", class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700"

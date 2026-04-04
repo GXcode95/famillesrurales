@@ -1,5 +1,5 @@
 .w-full.max-w-2xl.mx-auto
-  h1.text-2xl.font-bold.text-gray-900.mb-6
+  h1.text-2xl.font-bold.text-zinc-900.mb-6
     | Contactez-nous
 
   .bg-white.shadow-lg.rounded-lg.p-6
@@ -13,5 +13,5 @@
         = f.input :message, label: "Message", required: true, as: :text, input_html: { rows: 6 }
 
       .mt-6.flex.gap-3
-        = f.button :submit, "Envoyer", class: "inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
-        = link_to "Annuler", root_path, class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        = f.button :submit, "Envoyer", class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+        = link_to "Annuler", root_path, class: "inline-flex items-center rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"

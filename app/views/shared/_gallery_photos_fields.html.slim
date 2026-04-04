@@ -1,30 +1,30 @@
 - param_key = local_assigns.fetch(:param_key)
 - record = local_assigns.fetch(:record)
 
-fieldset.border.border-gray-200.rounded-lg.p-4.mt-4
-  legend.text-sm.font-semibold.text-gray-900.mb-3
+fieldset.border.border-zinc-200.rounded-lg.p-4.mt-4
+  legend.text-sm.font-semibold.text-zinc-900.mb-3
     | Photos (galerie)
   - if record.persisted? && record.gallery_photos.any?
-    p.text-xs.text-gray-600.mb-3
+    p.text-xs.text-zinc-600.mb-3
       | Les photos apparaissent ici et dans la galerie globale. Vous pouvez modifier les tags, remplacer une image ou supprimer une photo.
     .space-y-4.mb-6
       - record.gallery_photos.includes(:tags).each do |gp|
-        .flex.flex-col.sm:flex-row.gap-4.p-3.bg-gray-50.rounded-md
+        .flex.flex-col.sm:flex-row.gap-4.p-3.bg-zinc-50.rounded-md
           - if gp.image.attached?
             .shrink-0
               = image_tag gp.image.variant(resize_to_limit: [120, 120]), class: "rounded object-cover w-24 h-24"
           .flex-1.space-y-2.min-w-0
-            = label_tag "#{param_key}_gallery_photos_#{gp.id}_tag_list", "Tags", class: "block text-xs font-medium text-gray-700"
-            = text_field_tag "#{param_key}[gallery_photos][#{gp.id}][tag_list]", gp.tags.map(&:name).join(", "), class: "block w-full rounded-md border border-gray-300 text-sm px-2 py-1"
-            = label_tag "#{param_key}_gallery_photos_#{gp.id}_image", "Remplacer l'image (optionnel)", class: "block text-xs font-medium text-gray-700"
-            = file_field_tag "#{param_key}[gallery_photos][#{gp.id}][image]", accept: "image/jpeg,image/png,image/gif,image/webp", class: "block w-full text-sm text-gray-600"
+            = label_tag "#{param_key}_gallery_photos_#{gp.id}_tag_list", "Tags", class: "block text-xs font-medium text-zinc-700"
+            = text_field_tag "#{param_key}[gallery_photos][#{gp.id}][tag_list]", gp.tags.map(&:name).join(", "), class: "block w-full rounded-md border border-zinc-300 text-sm px-2 py-1"
+            = label_tag "#{param_key}_gallery_photos_#{gp.id}_image", "Remplacer l'image (optionnel)", class: "block text-xs font-medium text-zinc-700"
+            = file_field_tag "#{param_key}[gallery_photos][#{gp.id}][image]", accept: "image/jpeg,image/png,image/gif,image/webp", class: "block w-full text-sm text-zinc-600"
             .flex.items-center.gap-2.pt-1
               = check_box_tag "#{param_key}[gallery_photos][#{gp.id}][_destroy]", "1", false, id: "#{param_key}_gallery_photos_#{gp.id}_destroy"
               = label_tag "#{param_key}_gallery_photos_#{gp.id}_destroy", "Supprimer cette photo", class: "text-sm text-red-700"
-  .space-y-2.border-t.border-gray-100.pt-4
-    = label_tag "#{param_key}_gallery_tag_list", "Tags pour les nouvelles photos", class: "block text-sm font-medium text-gray-700"
-    = text_field_tag "#{param_key}[gallery_tag_list]", nil, class: "block w-full rounded-md border border-gray-300 text-sm px-2 py-1", placeholder: "ex. : sortie, été (appliqué à tout le lot ci-dessous)"
-    = label_tag "#{param_key}_gallery_images", "Ajouter des photos", class: "block text-sm font-medium text-gray-700"
+  .space-y-2.border-t.border-zinc-100.pt-4
+    = label_tag "#{param_key}_gallery_tag_list", "Tags pour les nouvelles photos", class: "block text-sm font-medium text-zinc-700"
+    = text_field_tag "#{param_key}[gallery_tag_list]", nil, class: "block w-full rounded-md border border-zinc-300 text-sm px-2 py-1", placeholder: "ex. : sortie, été (appliqué à tout le lot ci-dessous)"
+    = label_tag "#{param_key}_gallery_images", "Ajouter des photos", class: "block text-sm font-medium text-zinc-700"
     = file_field_tag "#{param_key}[gallery_images][]", multiple: true, accept: "image/jpeg,image/png,image/gif,image/webp", class: "block w-full text-sm"
-    p.text-xs.text-gray-500
+    p.text-xs.text-zinc-500
       | Sélectionnez une ou plusieurs images. Les tags ci-dessus s'appliquent à toutes les photos ajoutées dans ce bloc.

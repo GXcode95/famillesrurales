@@ -1,16 +1,16 @@
 .w-full
   .flex.items-center.justify-between.mb-6
-    h1.text-2xl.font-bold.text-gray-900
+    h1.text-2xl.font-bold.text-zinc-900
       Événements
     - if user_signed_in?
       = link_to "Nouvel événement", new_event_path,
-        class: "inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+        class: "inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
 
   - if @events.any?
     .flex.flex-col.gap-4
       - @events.each do |event|
         = render Events::Component.new(event: event, editable: user_signed_in?, link_to_show: true, signed_in: user_signed_in?)
   - else
-    p.text-gray-600
+    p.text-zinc-600
       Aucun événement pour le moment.
 
