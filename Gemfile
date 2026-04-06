@@ -66,3 +66,4 @@ gem "cancancan"
 gem "aws-sdk-s3", require: false
 gem "sidekiq"
 gem "pagy", "~> 9.0"
+gem "resend"

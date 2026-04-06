@@ -62,22 +62,11 @@ Rails.application.configure do
     protocol: "https"
   }
 
-  # SMTP (ex. Google : smtp.gmail.com:587 + AUTH plain + mot de passe d’application)
-  # Variables : SMTP_USER_NAME, SMTP_PASSWORD (obligatoires), optionnellement SMTP_ADDRESS, SMTP_PORT, SMTP_DOMAIN
-  config.action_mailer.delivery_method = :smtp
+  # Resend (API HTTPS — compatible Render gratuit, pas de SMTP sortant)
+  # RESEND_API_KEY + MAILER_FROM (domaine vérifié dans Resend, ou onboarding@resend.dev pour tester)
+  config.action_mailer.delivery_method = :resend
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.smtp_settings = {
-    address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
-    port: ENV.fetch("SMTP_PORT", "587").to_i,
-    domain: ENV.fetch("SMTP_DOMAIN", "gmail.com"),
-    user_name: ENV["SMTP_USER_NAME"],
-    password: ENV["SMTP_PASSWORD"],
-    authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain").to_sym,
-    enable_starttls_auto: true,
-    open_timeout: 10,
-    read_timeout: 10
-  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
