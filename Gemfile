@@ -64,5 +64,5 @@ gem "view_component"
 gem "simple_form"
 gem "cancancan"
 gem "aws-sdk-s3", require: false
-
+gem "sidekiq"
 gem "pagy", "~> 9.0"
