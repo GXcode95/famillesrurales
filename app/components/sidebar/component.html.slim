@@ -2,7 +2,7 @@
 #sidebar-overlay.fixed.inset-0.z-40.hidden.bg-zinc-950/40.backdrop-blur-sm data-sidebar-target="overlay" data-action="click->sidebar#toggle"
 
 / hidden sidebar ( toggleable on all devices)
-#sidebar.fixed.left-0.top-0.z-50.flex.h-full.w-72.-translate-x-full.flex-col.border-r.border-zinc-200/90.bg-white.transition-transform.duration-300.ease-in-out data-sidebar-target="sidebar"
+#sidebar.fixed.left-0.top-0.z-50.flex.h-full.w-64.-translate-x-full.flex-col.border-r.border-zinc-200/90.bg-white.transition-transform.duration-300.ease-in-out data-sidebar-target="sidebar"
 
   / sidebar header
   .flex.items-center.justify-between.border-b.border-zinc-100.p-5
@@ -63,39 +63,18 @@
               p.px-4.py-2.text-xs.text-zinc-500
                 | Aucune activité
 
-  / user section at the bottom of the sidebar
-  / TODO; Remove later
-  .border-t.border-zinc-100.p-4
-    - if user_signed_in?
+  - if user_signed_in?
+    .border-t.border-zinc-100.p-4
       span.text-xs.text-zinc-500.mb-1
         | Admin :
       .space-y-1
-        = link_to events_path, class: nav_item_classes(events_path)
-          = svg_tag("calendar", class: "w-5 h-5 mr-3 shrink-0")
-          | Événements
-        = link_to posts_path, class: nav_item_classes(posts_path)
-          = svg_tag("document", class: "w-5 h-5 mr-3 shrink-0")
-          | Articles
         = link_to staffs_path, class: nav_item_classes(staffs_path)
           = svg_tag("users", class: "w-5 h-5 mr-3 shrink-0")
           | Staff
         = link_to activities_path, class: nav_item_classes(activities_path)
           = svg_tag("clipboard", class: "w-5 h-5 mr-3 shrink-0")
           | Activités
-        = link_to categories_path, class: nav_item_classes(categories_path)
-          = svg_tag("tag", class: "w-5 h-5 mr-3 shrink-0")
-          | Catégories
 
-    - if user_signed_in?
-      .mb-3
-        p.text-xs.text-zinc-500.mb-1
-          | Connecté en tant que
-        p.text-sm.font-semibold.text-zinc-900
-          = current_user&.email
-      .space-y-2
+      .mt-4.space-y-2
         = link_to "Mon compte", edit_user_registration_path, class: "block w-full rounded-xl border border-blue-200/80 bg-blue-50/80 px-4 py-2.5 text-center text-sm font-medium text-blue-900 transition hover:bg-blue-100"
         = button_to "Déconnexion", destroy_user_session_path, method: :delete, class: "block w-full rounded-xl bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
-    - else
-      .space-y-2
-        = link_to "Connexion", new_user_session_path, class: "block w-full rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-center text-sm font-medium text-zinc-800 transition hover:bg-zinc-50"
-        = link_to "Inscription", new_user_registration_path, class: "block w-full rounded-xl bg-blue-600 px-4 py-2.5 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"

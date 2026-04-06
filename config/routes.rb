@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, skip: [:sessions], path_names: { sign_up: "inscription" }
+
+  devise_scope :user do
+    get "connexion", to: "devise/sessions#new", as: :new_user_session
+    post "connexion", to: "devise/sessions#create", as: :user_session
+    delete "deconnexion", to: "devise/sessions#destroy", as: :destroy_user_session
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -62,7 +62,8 @@ Rails.application.configure do
     protocol: "https"
   }
 
-  # SMTP pour envoi en production - configure via variables d'environnement sur Render
+  # SMTP (ex. Google : smtp.gmail.com:587 + AUTH plain + mot de passe d’application)
+  # Variables : SMTP_USER_NAME, SMTP_PASSWORD (obligatoires), optionnellement SMTP_ADDRESS, SMTP_PORT, SMTP_DOMAIN
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -72,7 +73,7 @@ Rails.application.configure do
     domain: ENV.fetch("SMTP_DOMAIN", "gmail.com"),
     user_name: ENV["SMTP_USER_NAME"],
     password: ENV["SMTP_PASSWORD"],
-    authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
+    authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain").to_sym,
     enable_starttls_auto: true,
     open_timeout: 10,
     read_timeout: 10

@@ -20,6 +20,14 @@ services:
           property: connectionString
       - key: CONTACT_EMAIL
         value: xavier.grenouillet@gmail.com
+      # Compte Gmail / Google Workspace + mot de passe d’application (voir Google Account → Sécurité)
+      - key: SMTP_USER_NAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      # De préférence identique au compte SMTP ou alias « envoyer en tant que » validé dans Gmail
+      - key: MAILER_FROM
+        sync: false
       - key: APP_HOST
         value: famillesrurales.onrender.com
 

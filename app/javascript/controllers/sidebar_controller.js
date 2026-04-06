@@ -95,10 +95,10 @@ export default class extends Controller {
   updateContentMargin(isOpen) {
     if (this.hasContentTarget) {
       if (isOpen && window.innerWidth >= 768) {
-        this.contentTarget.classList.add('md:ml-72')
+        this.contentTarget.classList.add('md:ml-64')
         this.contentTarget.classList.remove('md:ml-0')
       } else {
-        this.contentTarget.classList.remove('md:ml-72')
+        this.contentTarget.classList.remove('md:ml-64')
         this.contentTarget.classList.add('md:ml-0')
       }
     }
