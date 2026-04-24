@@ -1,5 +1,5 @@
 class Activity < ApplicationRecord
-  belongs_to :category
+  belongs_to :category, dependent: :destroy
 
   validate :end_date_not_before_start_date, if: -> { start_date.present? && end_date.present? }
 
