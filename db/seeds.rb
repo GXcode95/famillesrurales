@@ -2,6 +2,7 @@
 # Idempotent: relancer ce fichier ne cree pas de doublons pour les memes noms/titres.
 
 puts "Seeding resources..."
+require "stringio"
 
 categories = [
   "Sport",
@@ -9,6 +10,7 @@ categories = [
   "Jeunesse",
   "Numerique"
 ].map { |name| Category.find_or_create_by!(name:) }
+categories_by_name = categories.index_by { |c| c.name.to_s.downcase }
 
 staff_data = [
   { name: "Alice Martin", email: "alice.staff@example.com", job: "Coordinatrice", phone: "0600000001" },
@@ -80,9 +82,12 @@ activities_data = [
 ]
 
 activities_data.each do |attrs|
-  category = categories.find { |c| c.name == attrs.delete(:category_name) }
-  activity = Activity.find_or_initialize_by(name: attrs[:name])
-  activity.assign_attributes(attrs.merge(category:))
+  category_name = attrs.fetch(:category_name)
+  category = categories_by_name[category_name.downcase] || Category.find_by!(name: category_name)
+  activity_attrs = attrs.except(:category_name)
+
+  activity = Activity.find_or_initialize_by(name: activity_attrs[:name])
+  activity.assign_attributes(activity_attrs.merge(category:))
   activity.save!
 end
 
@@ -155,7 +160,15 @@ seed_user = User.first
 if seed_user
   gallery_targets = [posts.first, posts.second, events.first, events.second].compact
   gallery_targets.each_with_index do |target, idx|
-    photo = GalleryPhoto.find_or_create_by!(user: seed_user, attachable: target)
+    photo = GalleryPhoto.find_or_initialize_by(user: seed_user, attachable: target)
+    if photo.new_record?
+      photo.image.attach(
+        io: StringIO.new("seed-image-#{idx}"),
+        filename: "seed-#{idx + 1}.png",
+        content_type: "image/png"
+      )
+      photo.save!
+    end
     photo.assign_tags_from_string(idx.even? ? "famille, culture" : "sport, jeunesse")
   end
 else

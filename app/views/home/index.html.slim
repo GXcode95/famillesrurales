@@ -7,7 +7,7 @@
         - @latest_posts.each do |post|
           = render Posts::Component.new(post: post, editable: false)
       .mt-4
-        = link_to "Toutes les actualités →", posts_path,
+        = link_to "Toutes les nouvelles →", posts_path,
           class: "font-semibold text-orange-600 transition hover:text-orange-800"
   - else
     p.text-zinc-600

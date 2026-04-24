@@ -23,11 +23,11 @@
         | Nouvelles
 
       = link_to gallery_photos_path, class: nav_item_classes(gallery_photos_path)
-        = svg_tag("clipboard", class: "w-5 h-5 mr-3 shrink-0")
+        = svg_tag("camera", class: "w-5 h-5 mr-3 shrink-0")
         | Galerie
 
       = link_to calendar_path, class: nav_item_classes(calendar_path, exact: true)
-        = svg_tag("calendar_grid", class: "w-5 h-5 mr-3 shrink-0")
+        = svg_tag("calendar-days", class: "w-5 h-5 mr-3 shrink-0")
         | Calendrier
 
       = link_to staffs_path, class: nav_item_classes(staffs_path)
@@ -35,7 +35,7 @@
         | Administration
 
       = link_to contact_path, class: nav_item_classes(contact_path, exact: true)
-        = svg_tag("document", class: "w-5 h-5 mr-3 shrink-0")
+        = svg_tag("mail", class: "w-5 h-5 mr-3 shrink-0")
         | Contact
 
       - @events.each do |event|
@@ -70,7 +70,7 @@
       .space-y-1
         = link_to staffs_path, class: nav_item_classes(staffs_path)
           = svg_tag("users", class: "w-5 h-5 mr-3 shrink-0")
-          | Staff
+          | Équipe
         = link_to activities_path, class: nav_item_classes(activities_path)
           = svg_tag("clipboard", class: "w-5 h-5 mr-3 shrink-0")
           | Activités
