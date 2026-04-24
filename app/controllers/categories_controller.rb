@@ -1,8 +1,9 @@
 class CategoriesController < ApplicationController
+  before_action :authenticate_user!, except: %i[index]
   before_action :set_category, only: %i[edit update destroy]
 
   def index
-    @categories = Category.order(:name)
+    @categories = Category.includes(:activities).order(:name)
   end
 
   def new
@@ -30,8 +31,11 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
-    redirect_to categories_url, notice: "Catégorie supprimée avec succès."
+    if @category.destroy
+      redirect_to categories_url, notice: "Catégorie supprimée avec succès."
+    else
+      redirect_to categories_url, alert: "Impossible de supprimer cette catégorie car elle est utilisée par des activités."
+    end
   end
 
   private

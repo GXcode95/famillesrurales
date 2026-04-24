@@ -1,4 +1,5 @@
 class StaffsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index]
   before_action :set_staff, only: %i[edit update destroy]
 
   def index

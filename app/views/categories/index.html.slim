@@ -22,7 +22,11 @@
               td.px-4.py-3.text-sm.text-right.space-x-2
                 - if user_signed_in?
                   = link_to "Modifier", edit_category_path(category), class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-3 py-1 text-xs font-medium text-white hover:bg-blue-700"
-                  = button_to "Supprimer", category, method: :delete, data: { confirm: "Supprimer cette catégorie ?" }, class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700"
+                  - if category.activities.any?
+                    span.inline-flex.items-center.rounded-md.bg-zinc-200.px-3.py-1.text-xs.font-medium.text-zinc-600 title="Supprimez ou re-catégorisez d'abord les activités liées"
+                      | Supprimer
+                  - else
+                    = button_to "Supprimer", category, method: :delete, data: { confirm: "Supprimer cette catégorie ?" }, class: "inline-flex items-center rounded-md border border-transparent bg-red-600 px-3 py-1 text-xs font-medium text-white hover:bg-red-700"
   - else
     p.text-zinc-600
       | Aucune catégorie pour le moment.
