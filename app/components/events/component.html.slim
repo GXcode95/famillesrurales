@@ -57,18 +57,18 @@ article.surface-card.relative.overflow-hidden.px-5.py-6.sm:px-7
         - if comments.any?
           ul.space-y-2.mb-4
             - comments.each do |c|
-              li.text-sm.text-zinc-700.space-y-1
-                .flex.items-center.justify-between
-                  span.font-medium
+              li.text-sm.space-y-1
+                .flex.items-center.justify-between.gap-2
+                  span.font-semibold.text-zinc-900.shrink-0
                     = c.author.presence || "Anonyme"
                     - if @signed_in && c.email.present?
-                      span.text-zinc-500.text-xs.ml-2
+                      span.font-normal.text-zinc-500.text-xs.ml-2
                         | (
                         = c.email
                         | )
                   - if @signed_in
                     = button_to "Supprimer", event_comment_path(@event, c), method: :delete, data: { confirm: "Supprimer ce commentaire ?" }, class: "inline-flex rounded-md border border-transparent bg-red-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-red-700"
-                p.text-zinc-700.whitespace-pre-line
+                p.text-zinc-600.font-normal.leading-relaxed.whitespace-pre-line
                   = c.content
         - else
           p.text-sm.text-zinc-500.mb-4

@@ -38,5 +38,8 @@ module FamillesRurales
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.i18n.default_locale = :fr
+    config.i18n.available_locales = %i[fr en]
   end
 end

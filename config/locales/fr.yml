@@ -1,0 +1,52 @@
+# frozen_string_literal: true
+
+fr:
+  hello: "Bonjour"
+
+  helpers:
+    submit:
+      create: "Créer"
+      update: "Enregistrer"
+      submit: "Valider"
+
+  activerecord:
+    models:
+      activity: "Activité"
+      category: "Catégorie"
+      comment: "Commentaire"
+      event: "Événement"
+      gallery_photo: "Photo"
+      post: "Nouvelle"
+      staff: "Membre"
+      user: "Compte"
+    attributes:
+      user:
+        email: "E-mail"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+        current_password: "Mot de passe actuel"
+        remember_me: "Se souvenir de moi"
+      staff:
+        email: "E-mail"
+      contact_form:
+        email: "E-mail"
+      comment:
+        email: "E-mail"
+    errors:
+      messages:
+        record_invalid: "La validation a échoué : %{errors}"
+        blank: "doit être rempli(e)"
+        taken: "n'est pas disponible"
+        invalid: "n'est pas valide"
+        confirmation: "ne concorde pas avec la confirmation"
+        too_short:
+          one: "est trop court (au moins un caractère)"
+          other: "est trop court (au moins %{count} caractères)"
+        too_long:
+          one: "est trop long (au maximum un caractère)"
+          other: "est trop long (au maximum %{count} caractères)"
+        not_a_number: "n'est pas un nombre"
+        greater_than: "doit être supérieur à %{count}"
+        greater_than_or_equal_to: "doit être supérieur ou égal à %{count}"
+        less_than: "doit être inférieur à %{count}"
+        less_than_or_equal_to: "doit être inférieur ou égal à %{count}"

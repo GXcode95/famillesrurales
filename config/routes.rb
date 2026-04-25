@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users, skip: [:sessions], path_names: { sign_up: "inscription" }
+  # Ancienne config (avec inscription) conservée en commentaire :
+  # devise_for :users, skip: [:sessions], path_names: { sign_up: "inscription" }
+  devise_for :users, skip: %i[sessions registrations]
 
   devise_scope :user do
     get "connexion", to: "devise/sessions#new", as: :new_user_session
