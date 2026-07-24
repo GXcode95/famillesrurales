@@ -13,6 +13,7 @@ class CreateGalleryPhotosAndTags < ActiveRecord::Migration[8.2]
 
     create_table :gallery_photos do |t|
       t.references :user, null: false, foreign_key: true
+      t.references :attachable, polymorphic: true
       t.timestamps
     end
 
