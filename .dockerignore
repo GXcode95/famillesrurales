@@ -13,6 +13,9 @@
 # Ignore all default key files.
 /config/master.key
 /config/credentials/*.key
+# Pas de credentials chiffrés en image : SECRET_KEY_BASE via env Kamal
+/config/credentials.yml.enc
+/config/credentials/*.yml.enc
 
 # Ignore all logfiles and tempfiles.
 /log/*

@@ -13,4 +13,7 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  host: <%= ENV.fetch("DB_HOST", "familles_rurales-db") %>
+  database: <%= ENV.fetch("DB_NAME", "familles_rurales_production") %>
+  username: <%= ENV.fetch("DB_USER", "familles_rurales") %>
+  password: <%= ENV["DB_PASSWORD"] || ENV["POSTGRES_PASSWORD"] %>

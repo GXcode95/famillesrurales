@@ -21,17 +21,16 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :amazon
+  # Fichiers uploadés sur le volume Docker du VPS (pas de S3 pour démarrer).
+  config.active_storage.service = :local
 
-  # Assume all access to the app is happening through a SSL-terminating reverse proxy.
+  # SSL via Kamal proxy — réactiver quand le DNS pointe vers le VPS
   # config.assume_ssl = true
-
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
-
-  # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+
+  config.assume_ssl = false
+  config.force_ssl = false
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -58,7 +57,7 @@ Rails.application.configure do
 
   # Set host for mailer links (utiliser ton domaine réel)
   config.action_mailer.default_url_options = {
-    host: ENV.fetch("APP_HOST", "famillesrurales.onrender.com"),
+    host: ENV.fetch("APP_HOST", "familles-rurales-ahuy.fr"),
     protocol: "https"
   }
 
@@ -79,11 +78,13 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
+  config.hosts = [
+    "familles-rurales-ahuy.fr",
+    "www.familles-rurales-ahuy.fr",
+    "vps-9b04bad5.vps.ovh.net",
+    "164.132.197.2"
+  ]
+
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end

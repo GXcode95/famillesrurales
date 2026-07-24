@@ -41,5 +41,8 @@ module FamillesRurales
 
     config.i18n.default_locale = :fr
     config.i18n.available_locales = %i[fr en]
+
+    # Clé fournie via SECRET_KEY_BASE / RAILS_MASTER_KEY (Kamal), pas via fichier local
+    config.require_master_key = false
   end
 end
