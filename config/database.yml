@@ -9,7 +9,11 @@ development:
 
 test:
   <<: *default
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
   database: familles_rurales_test
+  username: <%= ENV.fetch("PGUSER", "postgres") %>
+  password: <%= ENV.fetch("PGPASSWORD", "") %>
+  port: <%= ENV.fetch("PGPORT", "5432") %>
 
 production:
   <<: *default
