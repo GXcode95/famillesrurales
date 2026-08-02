@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to users_path, notice: "Compte créé avec succès."
+      redirect_to users_path, notice: "Utilisateur créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
