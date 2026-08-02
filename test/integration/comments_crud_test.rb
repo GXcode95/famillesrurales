@@ -36,4 +36,13 @@ class CommentsCrudTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to posts_path(anchor: "post-#{post_record.id}")
   end
+
+  test "invalid comment is rejected" do
+    post_record = Post.create!(title: "Actu", body: "Texte")
+
+    assert_no_difference("Comment.count") do
+      post post_comments_path(post_record), params: { comment: { author: "", content: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
 end

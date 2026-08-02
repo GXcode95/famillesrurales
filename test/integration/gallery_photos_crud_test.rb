@@ -41,4 +41,13 @@ class GalleryPhotosCrudTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to gallery_photos_path
   end
+
+  test "create without images is rejected" do
+    sign_in create_user
+
+    assert_no_difference("GalleryPhoto.count") do
+      post gallery_photos_path, params: { gallery_photo: { tag_list: "vide", images: [] } }
+    end
+    assert_response :unprocessable_entity
+  end
 end
