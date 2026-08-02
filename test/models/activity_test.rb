@@ -4,7 +4,7 @@ require "test_helper"
 
 class ActivityTest < ActiveSupport::TestCase
   setup do
-    @category = Category.create!(name: "Sport")
+    @category = Category.create!(name: "cat-#{SecureRandom.hex(4)}")
   end
 
   test "rejects end_date before start_date" do

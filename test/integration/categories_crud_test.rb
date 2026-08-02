@@ -9,12 +9,12 @@ class CategoriesCrudTest < ActionDispatch::IntegrationTest
   end
 
   test "guest cannot create update or destroy category" do
-    category = Category.create!(name: "Culture")
+    category = create_category
 
-    post categories_path, params: { category: { name: "Sport" } }
+    post categories_path, params: { category: { name: "cat-#{SecureRandom.hex(4)}" } }
     assert_redirected_to new_user_session_path
 
-    patch category_path(category), params: { category: { name: "Danse" } }
+    patch category_path(category), params: { category: { name: "cat-#{SecureRandom.hex(4)}" } }
     assert_redirected_to new_user_session_path
 
     delete category_path(category)
@@ -23,21 +23,23 @@ class CategoriesCrudTest < ActionDispatch::IntegrationTest
 
   test "signed in user can create and update category" do
     sign_in create_user
+    name = "cat-#{SecureRandom.hex(4)}"
+    updated = "cat-#{SecureRandom.hex(4)}"
 
     assert_difference("Category.count", 1) do
-      post categories_path, params: { category: { name: "Musique" } }
+      post categories_path, params: { category: { name: } }
     end
     assert_redirected_to categories_path
 
-    category = Category.find_by!(name: "Musique")
-    patch category_path(category), params: { category: { name: "Piano" } }
+    category = Category.find_by!(name:)
+    patch category_path(category), params: { category: { name: updated } }
     assert_redirected_to categories_path
-    assert_equal "Piano", category.reload.name
+    assert_equal updated, category.reload.name
   end
 
   test "signed in user can delete category and its activities" do
     sign_in create_user
-    category = Category.create!(name: "Ref Category")
+    category = create_category
     Activity.create!(name: "Atelier", category:)
 
     assert_difference("Category.count", -1) do

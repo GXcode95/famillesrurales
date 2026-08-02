@@ -18,4 +18,8 @@ class ActionDispatch::IntegrationTest
   def create_user(email: "test-#{SecureRandom.hex(4)}@example.com", password: "Password123!")
     User.create!(email:, password:, password_confirmation: password)
   end
+
+  def create_category(name: "cat-#{SecureRandom.hex(4)}")
+    Category.create!(name:)
+  end
 end

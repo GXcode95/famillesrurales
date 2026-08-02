@@ -4,7 +4,7 @@ require "test_helper"
 
 class ActivitiesCrudTest < ActionDispatch::IntegrationTest
   test "index and show are public" do
-    category = Category.create!(name: "Sport")
+    category = create_category
     activity = Activity.create!(name: "Foot", category:)
 
     get activities_path
@@ -15,7 +15,7 @@ class ActivitiesCrudTest < ActionDispatch::IntegrationTest
   end
 
   test "guest cannot create update or destroy activity" do
-    category = Category.create!(name: "Culture")
+    category = create_category
     activity = Activity.create!(name: "Théâtre", category:)
 
     post activities_path, params: { activity: { name: "Chant", category_id: category.id } }
@@ -30,7 +30,7 @@ class ActivitiesCrudTest < ActionDispatch::IntegrationTest
 
   test "signed in user can create update and destroy activity" do
     sign_in create_user
-    category = Category.create!(name: "Loisirs")
+    category = create_category
 
     assert_difference("Activity.count", 1) do
       post activities_path, params: { activity: { name: "Échecs", category_id: category.id } }
