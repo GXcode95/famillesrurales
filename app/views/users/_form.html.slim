@@ -1,0 +1,14 @@
+.bg-white.shadow-lg.rounded-lg.p-6
+  = simple_form_for(@user) do |f|
+    = f.error_notification
+
+    .space-y-4
+      = f.input :email, required: true
+      = f.input :password, required: true, hint: "6 caractères minimum"
+      = f.input :password_confirmation, required: true
+
+    .mt-6.flex.justify-end.gap-3
+      = link_to "Annuler", users_path,
+        class: "inline-flex items-center rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
+      = f.button :submit, "Créer le compte",
+        class: "inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"

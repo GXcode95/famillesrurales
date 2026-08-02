@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy], controller: "comments"
   end
   resources :staffs, except: [:show]
+  resources :users, only: %i[index new create]
 
   resources :gallery_photos, path: "galerie", only: %i[index new create destroy]
 end

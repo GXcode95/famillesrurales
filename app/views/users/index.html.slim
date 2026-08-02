@@ -1,0 +1,25 @@
+.w-full
+  .flex.items-center.justify-between.mb-6
+    h1.text-2xl.font-bold.text-zinc-900
+      | Comptes
+    = link_to "Nouveau compte", new_user_path, class: "inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+
+  - if @users.any?
+    .overflow-x-auto.bg-white.shadow.rounded-lg
+      table.min-w-full.divide-y.divide-zinc-200
+        thead.bg-zinc-50
+          tr
+            th.px-4.py-3.text-left.text-xs.font-medium.text-zinc-500.uppercase
+              | E-mail
+            th.px-4.py-3.text-left.text-xs.font-medium.text-zinc-500.uppercase
+              | Créé le
+        tbody.bg-white.divide-y.divide-zinc-200
+          - @users.each do |user|
+            tr
+              td.px-4.py-3.text-sm.text-zinc-900
+                = user.email
+              td.px-4.py-3.text-sm.text-zinc-500
+                = l(user.created_at, format: :short)
+  - else
+    p.text-zinc-600
+      | Aucun compte pour le moment.
