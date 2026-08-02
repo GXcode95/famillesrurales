@@ -49,8 +49,7 @@ asset_path: /rails/public/assets
 
 builder:
   arch: amd64
-  # Build sur le VPS (pas de Docker sur la machine locale)
-  remote: ssh://ubuntu@164.132.197.2
+  # Build sur le runner CI / Docker local (évite le builder SSH distant)
 
 ssh:
   user: ubuntu
