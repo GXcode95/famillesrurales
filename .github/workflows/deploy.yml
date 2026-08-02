@@ -19,6 +19,7 @@ jobs:
 
     env:
       DOCKER_BUILDKIT: "1"
+      KAMAL_REGISTRY_USERNAME: ${{ github.actor }}
       KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -36,6 +37,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.1
         with:
@@ -46,7 +54,6 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keygen -R 164.132.197.2 2>/dev/null || true
-          # Sans -H : Net::SSH (Kamal) gère mal les known_hosts hashés
           ssh-keyscan -t ed25519,rsa,ecdsa 164.132.197.2 >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes ubuntu@164.132.197.2 'echo ssh_ok'

@@ -1,8 +1,9 @@
 # Name of your application. Used to uniquely configure containers.
 service: familles_rurales
 
-# Image sur GitHub Container Registry (pas besoin de Docker Hub)
-image: gxcode95/familles_rurales
+# Image sur GitHub Container Registry
+# Doit rester en minuscules pour ghcr.io
+image: gxcode95/famillesrurales
 
 servers:
   web:
@@ -20,7 +21,8 @@ proxy:
 # GitHub Container Registry
 registry:
   server: ghcr.io
-  username: GXcode95
+  username:
+    - KAMAL_REGISTRY_USERNAME
   password:
     - KAMAL_REGISTRY_PASSWORD
 
