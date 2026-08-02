@@ -30,6 +30,8 @@ env:
   secret:
     - SECRET_KEY_BASE
     - POSTGRES_PASSWORD
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
   clear:
     APP_HOST: familles-rurales-ahuy.fr
     CONTACT_EMAIL: xavier.grenouillet@gmail.com
@@ -37,6 +39,8 @@ env:
     DB_HOST: familles_rurales-db
     DB_NAME: familles_rurales_production
     DB_USER: familles_rurales
+    AWS_REGION: eu-west-3
+    AWS_BUCKET: familles-rurales-ahuy-bucket
 
 aliases:
   console: app exec --interactive --reuse "bin/rails console"

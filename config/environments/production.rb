@@ -21,8 +21,8 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
-  # Fichiers uploadés sur le volume Docker du VPS (pas de S3 pour démarrer).
-  config.active_storage.service = :local
+  # Fichiers uploadés sur Amazon S3 (Active Storage)
+  config.active_storage.service = :amazon
 
   # SSL via Kamal proxy — réactiver quand le DNS pointe vers le VPS
   # config.assume_ssl = true
