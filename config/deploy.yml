@@ -9,14 +9,11 @@ servers:
   web:
     - 164.132.197.2
 
-# SSL désactivé tant que le DNS ne pointe pas vers le VPS.
-# Quand les A @ et www → 164.132.197.2, remettre ssl: true
+# SSL Let's Encrypt via le proxy Kamal
+# Important : www doit aussi pointer en A vers 164.132.197.2 avant de l'ajouter ici
 proxy:
-  ssl: false
-  hosts:
-    - familles-rurales-ahuy.fr
-    - www.familles-rurales-ahuy.fr
-    - 164.132.197.2
+  ssl: true
+  host: familles-rurales-ahuy.fr
 
 # GitHub Container Registry
 registry:
