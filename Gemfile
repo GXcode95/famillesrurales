@@ -65,5 +65,5 @@ gem "simple_form"
 gem "cancancan"
 gem "aws-sdk-s3", require: false
 gem "sidekiq"
-gem "pagy", "~> 9.0"
+gem "pagy", "~> 43.5"
 gem "resend"
